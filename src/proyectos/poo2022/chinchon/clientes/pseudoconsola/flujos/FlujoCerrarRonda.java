@@ -6,9 +6,9 @@ import java.util.Set;
 import proyectos.poo2022.chinchon.clientes.pseudoconsola.PseudoConsola;
 import proyectos.poo2022.chinchon.enumerados.EstadoPrograma;
 import proyectos.poo2022.chinchon.interactuar.Controlador;
-import proyectos.poo2022.chinchon.jugadas.Jugada;
 import proyectos.poo2022.chinchon.principal.Carta;
 import proyectos.poo2022.chinchon.principal.ConjuntoCartas;
+import proyectos.poo2022.chinchon.principal.Jugada;
 import proyectos.poo2022.chinchon.principal.Mano;
 import proyectos.poo2022.chinchon.utilidades.MetodosUtiles;
 

@@ -1,8 +1,6 @@
-package proyectos.poo2022.chinchon.jugadas;
+package proyectos.poo2022.chinchon.principal;
 
 import proyectos.poo2022.chinchon.enumerados.Palo;
-import proyectos.poo2022.chinchon.principal.Carta;
-import proyectos.poo2022.chinchon.principal.ConjuntoCartas;
 
 public class Jugada extends ConjuntoCartas {
 	

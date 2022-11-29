@@ -1,7 +1,6 @@
 package proyectos.poo2022.chinchon.principal;
 
 import proyectos.poo2022.chinchon.interactuar.Controlador;
-import proyectos.poo2022.chinchon.jugadas.Jugada;
 
 public class Jugador  {
 	private			Mano 				mano 			= new Mano();

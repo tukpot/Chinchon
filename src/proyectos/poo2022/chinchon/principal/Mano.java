@@ -1,7 +1,5 @@
 package proyectos.poo2022.chinchon.principal;
 
-import proyectos.poo2022.chinchon.jugadas.Jugada;
-
 public class Mano extends ConjuntoCartas{
 
     
