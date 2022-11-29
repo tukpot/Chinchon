@@ -22,8 +22,8 @@ public class Controlador implements Observador {
 
 	public void actualizar(Object evento, Observable observado) {
 	    vista.actualizarManoYPila();
-	    if(evento instanceof Eventos) {
-		switch((Eventos) evento) {
+	    if(evento instanceof Evento) {
+		switch((Evento) evento) {
 			default:
 				
 			    break;
@@ -50,12 +50,16 @@ public class Controlador implements Observador {
 					vista.bloquear();
 				    }
 				    break;
+				    
+				case MOSTRAR_PUNTOS:
+				    this.vista.mostrarPuntos();
+				    break;
 					
 				/*case FIN_TURNO:
 					vista.terminarTurno();
 					break;*/
 					
-				case INICIAR_PARTIDA:
+				//case INICIAR_PARTIDA:
 				    
 				}
 	
@@ -68,7 +72,7 @@ public class Controlador implements Observador {
 	
 	
 		public void juegoNuevo(int cantidadJugadores) {
-			this.modelo.iniciarJuego(cantidadJugadores);
+			this.modelo.nuevaRonda(cantidadJugadores);
 		}
 		
 		public Jugador getJugadorActual() {
@@ -81,15 +85,15 @@ public class Controlador implements Observador {
 		}
 
 		public void tomarTopePilaDescarte() { //cambiar
-			this.modelo.tomarTopePilaDescarte();
+			this.modelo.tomarTopePilaDescarte(this.getJugador());
 		}
 		
 		public void tomarTopeMazo() {
-			this.modelo.tomarTopeMazo();
+			this.modelo.tomarTopeMazo(this.getJugador());
 		}
 
 		public void descartar(int cartaElegida) {
-			this.modelo.descartar(cartaElegida);
+			this.modelo.descartar(cartaElegida, this.getJugador());
 		}
 
 		public void setJugador(String nombre) {
@@ -125,5 +129,18 @@ public class Controlador implements Observador {
 
 		public void terminarTurno() {
 		    this.modelo.siguienteTurno();
+		}
+
+		public void terminarRonda() {
+		    this.modelo.terminarRonda();
+		    
+		}
+
+		public int getCantidadJugadores() {
+		    return this.modelo.getCantidadJugadores();
+		}
+
+		public Jugador getJugador(int i) {
+		    return this.modelo.getJugador(i);
 		}
 }

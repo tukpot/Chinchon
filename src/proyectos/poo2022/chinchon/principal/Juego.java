@@ -2,27 +2,35 @@ package proyectos.poo2022.chinchon.principal;
 
 import java.util.ArrayList;
 
-import proyectos.poo2022.chinchon.enumerados.Eventos;
+import proyectos.poo2022.chinchon.enumerados.Evento;
 import proyectos.poo2022.chinchon.interactuar.*;
 
 public class Juego implements Observable{
 	private ArrayList<Observador> 		observadores 	= new ArrayList<Observador>();
 	private ArrayList<Jugador> 		jugadores 	= new ArrayList<Jugador>();
-	private int				jugadorActual	= 0;
-	private Mazo 				mazo 		= new Mazo();
-	private PilaDescarte 			pilaDescarte	= new PilaDescarte();
-	private int				turno		= 1;
+	private Ronda ronda;
+	private int 				jugadorMano 	= -1;
 
-	public void iniciarJuego(int cantidadJugadoresIn) {
-	    this.mazo.barajar();
-	    this.mazo.repartir(this.jugadores, 7, false);
-	    this.pilaDescarte.añadirCarta(this.mazo.tomarCartaTope());
-	    this.notificar(Eventos.NUEVO_TURNO);
+
+
+	public void nuevaRonda(int jugadorMano) {
+	    this.cambiarJugadorMano();
+	    this.ronda = new Ronda(this.jugadorMano, this.jugadores);
+	    this.notificar(Evento.NUEVO_TURNO);
 	}
 
-	private Jugador getJugador(int i) {
-	    return this.jugadores.get(i-1);
+	private void cambiarJugadorMano() {
+	    if (this.jugadorMano==-1) {
+		this.jugadorMano =0;
+	    }
+	    else if (this.jugadorMano<this.jugadores.size()-1) {
+		this.jugadorMano++;
+	    }
+	    else {
+		this.jugadorMano =0;
+	    }
 	}
+
 
 	public void notificar(Object evento) {
 	    for (int i=0; i<this.observadores.size();i++) {
@@ -30,7 +38,6 @@ public class Juego implements Observable{
 	    }
 	}
 	
-
 	public void agregarObservador(Observador observador) {
 	    this.observadores.add(observador);
 	}
@@ -40,35 +47,29 @@ public class Juego implements Observable{
 	}
 
 	public void siguienteTurno() {
-	    if (this.jugadorActual<this.jugadores.size()-1) {
-		this.jugadorActual = this.jugadorActual +1;
-	    }
-	    else {
-		this.jugadorActual = 0;
-	    }
-	    this.turno++;
-	    this.notificar(Eventos.NUEVO_TURNO);
+	    this.ronda.siguienteTurno();
+	    this.notificar(Evento.NUEVO_TURNO);
 	}
 
 	public Jugador getJugadorActual() {
-	    return this.jugadores.get(jugadorActual);
+	    return this.ronda.getJugadorActual();
 	}
 
 	public Carta getTopePila() {
-	    return this.pilaDescarte.getTope();
+	    return this.ronda.getTopePila();
 	}
 
-	public void tomarTopePilaDescarte() {
-	    this.jugadores.get(this.jugadorActual).tomarCartaPilaDescarte(this.pilaDescarte);
+	public void tomarTopePilaDescarte(Jugador jugadorQueToma) {
+	    this.ronda.tomarTopePilaDescarte(jugadorQueToma);
 	}
 
-	public void tomarTopeMazo() {
-	    this.jugadores.get(this.jugadorActual).tomarCartaMazo(this.mazo);
+	public void tomarTopeMazo(Jugador jugadorQueToma) {
+	    this.ronda.tomarTopeMazo(jugadorQueToma);
 	}
 
-	public void descartar(int cartaElegida) {
-	    this.getJugadorActual().descartarCarta(cartaElegida,this.pilaDescarte);
-	    this.notificar(Eventos.ACTUALIZAR_CARTAS);
+	public void descartar(int cartaElegida, Jugador jugadorQueDescarta) {
+	    this.ronda.descartar(cartaElegida, jugadorQueDescarta);
+	    this.notificar(Evento.ACTUALIZAR_CARTAS);
 	}
 
 	public void agregarJugador(Jugador jugador) {
@@ -95,13 +96,26 @@ public class Juego implements Observable{
 		    return;
     		}
 	    }
-	    this.iniciarJuego(jugadorActual);	
+	    this.nuevaRonda(this.jugadorMano);	
 	}
 
 	public Jugador getJugadorEnTurno() {
-	    return this.jugadores.get(jugadorActual);
+	    return this.ronda.getJugadorActual();
 	}
 
+	public void terminarRonda() {
+	    this.ronda.sumarPuntos();
+	    this.notificar(Evento.MOSTRAR_PUNTOS);
+	}
+
+	
+	public int getCantidadJugadores() {
+	    return this.jugadores.size();
+	}
+	
+	public Jugador getJugador(int nJugador) {
+	    return this.jugadores.get(nJugador -1);
+	}
 }
 
 	

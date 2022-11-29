@@ -6,77 +6,76 @@ import proyectos.poo2022.chinchon.principal.ConjuntoCartas;
 
 public class Jugada extends ConjuntoCartas {
 	
-	
-	public Jugada(ConjuntoCartas combinacionCartas) throws Exception {
-		super();
-		if (!!(esJugadaValida(combinacionCartas))){
-			throw new Exception("Jugada invalida.");
-		}
+	public Jugada(ConjuntoCartas cartasJugada) throws Exception {
+	    super();
+	    if (Jugada.esJugadaValida(cartasJugada)) {
+		this.añadirConjunto(cartasJugada);
+	    }
+	    else {
+		throw new Exception("Jugada inválida");
+	    }
 	}
 	
 	
-	private boolean esJugadaValida(ConjuntoCartas combinacionCartas) {
-		if (cantidadComodines(combinacionCartas)>1) {
-			return false;
-		}
+	public static boolean esJugadaValida(ConjuntoCartas jugada) {
+	    if (jugada.getCantidadCartas()<3) {
+		return false;
+	    }
+	    if (Jugada.cantidadComodines(jugada)>1) {
+		return false;
+	    }
 		
-		if (esRepeticion(combinacionCartas) || esEscalera(combinacionCartas)) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-	
-	
-	private boolean esEscalera(ConjuntoCartas combinacionCartas) {
-		boolean respuesta = true;
-		Carta cartaAnterior = combinacionCartas.getCarta(1);
-		int inicio = 2;
-		if (cartaAnterior.getPalo()==Palo.COMODIN) {
-			cartaAnterior= combinacionCartas.getCarta(2);
-			inicio = 3;
-		}
-		Palo paloDelJuego = cartaAnterior.getPalo();
+	    if (Jugada.esRepeticion(jugada) || Jugada.esEscalera(jugada)) {
+		return true;
+	    }
 
-			for (int i=inicio; i<=combinacionCartas.getCantidadCartas();i++) {
-				if ((combinacionCartas.getCarta(i).getNumero() == cartaAnterior.getNumero()+1) 
-						&& (combinacionCartas.getCarta(i).getPalo()==paloDelJuego)) {
-					cartaAnterior = combinacionCartas.getCarta(i);
-				}
-				else if(combinacionCartas.getCarta(i).getPalo()==Palo.COMODIN) {
-					cartaAnterior = new Carta(paloDelJuego, cartaAnterior.getNumero()+1);
-				}
-				else {
-					respuesta = false;
-					break;
-				}
-			}
-		
-		return respuesta;
+	    return false;
 	}
 	
-	private boolean esRepeticion(ConjuntoCartas combinacionCartas) {
+	
+	private static boolean esEscalera(ConjuntoCartas jugada) {
+	    jugada.ordenarCartas(); //Por regla, sabemos que los comodines se ordenan hacia el final
+	    int fallos = 0; 	//Cada vez que una carta no sea exactamente 1 mayor, se suma 1.
+	    int cantidadComodines = cantidadComodines(jugada);
+	    Carta cartaAnterior = jugada.getCarta(1);
+	    Palo paloDelJuego = cartaAnterior.getPalo();
+	    
+	    for (int i=1; i<=jugada.getCantidadCartas()-cantidadComodines ;i++) {
+		if (!(jugada.getCarta(i).getPalo()==paloDelJuego)) {
+		    return false;
+		}
+		if (!(jugada.getCarta(i).getNumero()==cartaAnterior.getNumero()+1)) {
+		    fallos++;
+		}
+		cartaAnterior = jugada.getCarta(i);
+	    }
+	    if ((fallos-cantidadComodines)>0) {
+		return false;
+	    }
+	    return true;
+	}
+	
+	private static boolean esRepeticion(ConjuntoCartas jugada) {
 		boolean resultado = true;
-		Carta primeraCarta = combinacionCartas.getCarta(1);
+		Carta primeraCarta = jugada.getCarta(1);
 		int inicio = 1;
 		if (primeraCarta.getPalo()==Palo.COMODIN) {
 			inicio = 2;
-			primeraCarta = combinacionCartas.getCarta(2);
+			primeraCarta = jugada.getCarta(2);
 		}
-		for (int i=inicio; i<=combinacionCartas.getCantidadCartas();i++) {
-			if (combinacionCartas.getCarta(i).getNumero()!=primeraCarta.getNumero()) {
-				resultado = false;
-				break;
+		for (int i=inicio; i<=jugada.getCantidadCartas();i++) {
+			if (!(jugada.getCarta(i).tieneMismoNumero(primeraCarta))) {
+			    resultado = false;
+			    break;
 			}
 		}
 		return resultado;
 	}
 	
-	private int cantidadComodines(ConjuntoCartas combinacionCartas) {
+	private static int cantidadComodines(ConjuntoCartas jugada) {
 		int resultado = 0;
-		for (int i=1; i<=combinacionCartas.getCantidadCartas();i++) {
-			if (combinacionCartas.getCarta(i).getPalo()==Palo.COMODIN) {
+		for (int i=1; i<=jugada.getCantidadCartas();i++) {
+			if (jugada.getCarta(i).getPalo()==Palo.COMODIN) {
 				resultado++;
 			}
 		}

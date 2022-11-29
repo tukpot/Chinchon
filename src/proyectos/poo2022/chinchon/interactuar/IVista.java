@@ -12,5 +12,6 @@ public interface IVista {
 	void partidaIniciada();
 	void bloquear();
 	void jugarTurno();
+	void mostrarPuntos();
 
 }

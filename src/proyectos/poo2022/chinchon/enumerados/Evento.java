@@ -1,6 +1,6 @@
 package proyectos.poo2022.chinchon.enumerados;
 
-public enum Eventos { 
+public enum Evento { 
 	DESCARTAR, 
 	CARTA_TOMADA,
 	FIN_TURNO,
@@ -14,7 +14,8 @@ public enum Eventos {
 	ENGANCHAR_JUEGO,
 	NUEVO_TURNO,
 	ACTUALIZAR_CARTAS, 
-	INICIAR_PARTIDA
+	INICIAR_PARTIDA,
+	MOSTRAR_PUNTOS
 	
 
 }

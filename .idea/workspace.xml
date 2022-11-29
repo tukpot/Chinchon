@@ -1,33 +1,78 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="ChangeListManager">
-    <list default="true" id="fc6cd098-3837-4fc4-849d-1215d4953dba" name="Changes" comment="" />
-    <option name="SHOW_DIALOG" value="false" />
-    <option name="HIGHLIGHT_CONFLICTS" value="true" />
-    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
-    <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="ProjectId" id="2I3vsTVNayACXIA94TyvCz7mTrL" />
-  <component name="ProjectViewState">
-    <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showLibraryContents" value="true" />
-  </component>
-  <component name="PropertiesComponent"><![CDATA[{
+	<component name="ChangeListManager">
+		<list default="true" id="fc6cd098-3837-4fc4-849d-1215d4953dba"
+			name="Changes" comment="" />
+		<option name="SHOW_DIALOG" value="false" />
+		<option name="HIGHLIGHT_CONFLICTS" value="true" />
+		<option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+		<option name="LAST_RESOLUTION" value="IGNORE" />
+	</component>
+	<component name="Git.Settings">
+		<option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+	</component>
+	<component name="MarkdownSettingsMigration">
+		<option name="stateVersion" value="1" />
+	</component>
+	<component name="ProjectId" id="2I3vsTVNayACXIA94TyvCz7mTrL" />
+	<component name="ProjectViewState">
+		<option name="hideEmptyMiddlePackages" value="true" />
+		<option name="showLibraryContents" value="true" />
+	</component>
+	<component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "C:/Users/Jonás Díaz/Desktop/Programación/Eclipse workspace/Chinchón"
+    "last_opened_file_path": "C:/Users/Jonás Díaz/Desktop/Programación/Eclipse workspace/Chinchón",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "preferences.pluginManager"
   }
 }]]></component>
-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
-  <component name="TaskManager">
-    <task active="true" id="Default" summary="Default task">
-      <changelist id="fc6cd098-3837-4fc4-849d-1215d4953dba" name="Changes" comment="" />
-      <created>1669423288200</created>
-      <option name="number" value="Default" />
-      <option name="presentableId" value="Default" />
-      <updated>1669423288200</updated>
-    </task>
-    <servers />
-  </component>
+	<component name="RunManager">
+		<configuration name="MultijugadorLocal"
+			type="Application" factoryName="Application" nameIsGenerated="true">
+			<option name="ALTERNATIVE_JRE_PATH" value="1.8" />
+			<option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+			<option name="MAIN_CLASS_NAME"
+				value="proyectos.poo2022.chinchon.jugar.MultijugadorLocal" />
+			<option name="PROGRAM_PARAMETERS"
+				value="proyectos.poo2022.chinchon.jugar.MultijugadorLocal" />
+			<extension name="coverage" sample_coverage="false">
+				<pattern>
+					<option name="PATTERN"
+						value="proyectos.poo2022.chinchon.jugar.*" />
+					<option name="ENABLED" value="true" />
+				</pattern>
+			</extension>
+			<method v="2">
+				<option name="Make" enabled="true" />
+			</method>
+		</configuration>
+	</component>
+	<component name="SpellCheckerSettings"
+		RuntimeDictionaries="0" Folders="0" CustomDictionaries="0"
+		DefaultDictionary="application-level" UseSingleDictionary="true"
+		transferred="true" />
+	<component name="TaskManager">
+		<task active="true" id="Default" summary="Default task">
+			<changelist id="fc6cd098-3837-4fc4-849d-1215d4953dba"
+				name="Changes" comment="" />
+			<created>1669423288200</created>
+			<option name="number" value="Default" />
+			<option name="presentableId" value="Default" />
+			<updated>1669423288200</updated>
+		</task>
+		<servers />
+	</component>
+	<component name="Vcs.Log.Tabs.Properties">
+		<option name="TAB_STATES">
+			<map>
+				<entry key="MAIN">
+					<value>
+						<State />
+					</value>
+				</entry>
+			</map>
+		</option>
+	</component>
 </project>

@@ -18,8 +18,34 @@ public class Carta {
 	public int getNumero() {
 	    return this.numero;
 	}
-
 	
+	public boolean tieneMismoNumero(Carta carta) {
+	    if (carta.getNumero()==this.getNumero()) {
+		return true;
+	    }
+	    if (carta.getPalo()==Palo.COMODIN) {
+		return true;
+	    }
+	    return false;
+	}
+	
+	public boolean tieneMismoPalo(Carta carta) {
+	    if ( (carta.getPalo()==Palo.COMODIN) || (this.getPalo()==Palo.COMODIN) ){
+		return true;
+	    }
+	    if (carta.getPalo()==this.getPalo()) {
+		return true;
+	    }
+	    return false;
+	}
+	
+	public String toString() {
+	        if (this.getPalo()==Palo.COMODIN) {
+	            return "[COMODÍN]";
+	        }
+	        String textoSalida= "["+String.valueOf(this.getNumero()) +" de "+ this.getPalo()+"]";
+	        return textoSalida;
+	}
 	
 	
 }

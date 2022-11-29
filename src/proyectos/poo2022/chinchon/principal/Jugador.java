@@ -1,13 +1,17 @@
 package proyectos.poo2022.chinchon.principal;
 
 import proyectos.poo2022.chinchon.interactuar.Controlador;
+import proyectos.poo2022.chinchon.jugadas.Jugada;
 
 public class Jugador  {
-	private			Mano 				mano 				= new Mano();
-	private 		int 				puntos 				= 0;
+	private			Mano 				mano 			= new Mano();
+	private 		int 				puntos 			= 0;
 	private 		String				nombre;	
 	private 		Controlador 			controlador;
 	private			boolean				listoParaJugar 		= false;
+	private			boolean				esElJugadorQueCerro	= false;
+	private 		Jugada 				jugada1;
+	private 		Jugada 				jugada2;
 	
 
 	public Jugador(String nombre) {
@@ -49,14 +53,40 @@ public class Jugador  {
 
 
 	public void setListoParaJugar(boolean listo) {
-		this.listoParaJugar = listo;
+	    this.listoParaJugar = listo;
 	}
 
 
 	public boolean getListoParaJugar() {
-		return this.listoParaJugar;
+	    return this.listoParaJugar;
+	}
+	
+	protected void resetMano() {
+	   this.mano = new Mano();
 	}
 
-	
+	public int getPuntos() {
+	    return puntos;
+	}
 
+
+	public void añadirPuntosMano() {
+	    if ((this.esElJugadorQueCerro) && (this.getMano().getValor(this.jugada1,this.jugada2)==0)) {
+		this.puntos = this.puntos -10;
+	    }
+	    else {
+		this.puntos = this.puntos + this.getMano().getValor(this.jugada1,this.jugada2);
+	    }
+	    
+	}
+
+
+	public void setJugadas(Jugada jugada1, Jugada jugada2) {
+	    this.jugada1 =	jugada1;
+	    this.jugada2 =	jugada2;
+	}
+
+	public void setEsElJugadorQueCerro(boolean siONo) {
+	    this.esElJugadorQueCerro = siONo;
+	}
 }
