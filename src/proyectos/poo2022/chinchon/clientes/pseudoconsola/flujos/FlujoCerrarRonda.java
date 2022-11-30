@@ -13,11 +13,9 @@ import proyectos.poo2022.chinchon.principal.Mano;
 import proyectos.poo2022.chinchon.utilidades.MetodosUtiles;
 
 public class FlujoCerrarRonda extends Flujo{
-    private ConjuntoCartas 	jugadaEnProceso1;
-    private ConjuntoCartas	jugadaEnProceso2;
     private Jugada 		jugada1;
     private Jugada 		jugada2;
-    private Mano		cartasDisponibles; //Esto es para no modificar la mano real;
+    private Mano		copiaLocalMano; //Esto es para no modificar la mano real;
     private Carta		cartaQueCorta;
     
     public FlujoCerrarRonda(PseudoConsola vista) {
@@ -31,7 +29,7 @@ public class FlujoCerrarRonda extends Flujo{
     
     private void mensajeRecibirCartaQueCorta() {
 	println("Indique la carta con la cual quiere cortar.");
-	println(this.cartasDisponibles.toString());
+	println(this.copiaLocalMano.toString());
     }
 
 
@@ -85,13 +83,13 @@ public class FlujoCerrarRonda extends Flujo{
 	}
 	if (texto.equals("1")) {
 	    if (this.jugada2==null) {
-		if (this.cartasDisponibles.esCerrable(this.jugada1,this.cartaQueCorta)) {
+		if (this.copiaLocalMano.esCerrable(this.jugada1,this.cartaQueCorta)) {
 		    this.terminarFlujo();
 		}
 		
 	    }
 	    else {
-		if (this.cartasDisponibles.esCerrable(jugada1,jugada2, cartaQueCorta)) {
+		if (this.copiaLocalMano.esCerrable(this.jugada1,this.cartaQueCorta)) {
 		   this.terminarFlujo(); 
 		}
 	    }
@@ -112,15 +110,15 @@ public class FlujoCerrarRonda extends Flujo{
 
     private void setCartaQueCorta(String texto) {
 	if (!( 	   MetodosUtiles.esInt(texto) //valido estas 3 cosas
-		&& ( this.cartasDisponibles.getCantidadCartas()>=Integer.valueOf(texto) )
+		&& ( this.copiaLocalMano.getCantidadCartas()>=Integer.valueOf(texto) )
 		&& (Integer.valueOf(texto)>=1) )) {
 	    this.clear();
 	    this.mensajeCartaInvalida();
 	    this.mensajeRecibirCartaQueCorta();
 	    return;
 	}
-	this.cartaQueCorta = this.cartasDisponibles.getCarta(Integer.valueOf(texto));
-	this.cartasDisponibles.tomarCarta(Integer.valueOf(texto));
+	this.cartaQueCorta = this.copiaLocalMano.getCarta(Integer.valueOf(texto));
+	this.copiaLocalMano.tomarCarta(Integer.valueOf(texto));
 	this.mensajeRecibirCantidadJugadas();
 	this.setEstadoActual(EstadoPrograma.RECIBIENDO_CANTIDAD_JUGADAS);
     }
@@ -137,7 +135,7 @@ public class FlujoCerrarRonda extends Flujo{
 	
 	try { //valida que la jugada sea válida;
 	    int[] posiciones = MetodosUtiles.arrayStringAInt(texto.split(","));
-	    jugadaNueva = new Jugada(this.cartasDisponibles.getCartas(posiciones));
+	    jugadaNueva = new Jugada(this.copiaLocalMano.getCartas(posiciones));
 	}
 	catch (Exception e) {
 	    this.clear();
@@ -148,7 +146,7 @@ public class FlujoCerrarRonda extends Flujo{
 	
 	if (this.jugada1==null) { //guard clause
 	    this.jugada1= jugadaNueva;
-	    this.cartasDisponibles.quitarConjuntoCartas(jugadaNueva);
+	    this.copiaLocalMano.quitarConjuntoCartas(jugadaNueva);
 	    this.mensajeArmar2Jugadas();
 	    return;
 	}
@@ -156,6 +154,7 @@ public class FlujoCerrarRonda extends Flujo{
 	
 	if (this.jugada2==null) { //guard clause
 	    this.jugada2 = jugadaNueva;
+	    this.copiaLocalMano.quitarConjuntoCartas(jugadaNueva);
 	    this.mensajeConfirmar();
 	    this.setEstadoActual(EstadoPrograma.ESPERANDO_CONFIRMACION);
 	    return;
@@ -192,7 +191,7 @@ public class FlujoCerrarRonda extends Flujo{
 	Jugada jugadaNueva;
 	try { //validación
 	    int[] posiciones = MetodosUtiles.arrayStringAInt(texto.split(","));
-	    jugadaNueva = new Jugada(this.cartasDisponibles.getCartas(posiciones));
+	    jugadaNueva = new Jugada(this.copiaLocalMano.getCartas(posiciones));
 	}
 	catch (Exception e) {
 	    this.clear();
@@ -243,12 +242,13 @@ public class FlujoCerrarRonda extends Flujo{
     }
     
     private void reiniciarCopiaMano() {
-	this.cartasDisponibles = this.getControlador().getJugador().getMano();
+	this.copiaLocalMano = new Mano();
+	this.copiaLocalMano.añadirConjunto( this.getControlador().getJugador().getMano().devolverCopiaConjunto());
     }
 
     private void mostrarCartasDisponibles() {
 	this.println("Estas son sus cartas disponibles.");
-	this.println(this.cartasDisponibles.toString());
+	this.println(this.copiaLocalMano.toString());
     }
 
     protected void terminarFlujo() {

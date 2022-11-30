@@ -57,7 +57,7 @@ public class ConjuntoCartas {
 		});
 	}
 	
-	protected void añadirConjunto(ConjuntoCartas conjuntoCartasAñadir) {
+	public void añadirConjunto(ConjuntoCartas conjuntoCartasAñadir) {
 	    for (int i=1; i<= conjuntoCartasAñadir.getCantidadCartas();i++) {
 		this.añadirCarta(conjuntoCartasAñadir.getCarta(i));
 	    }
@@ -79,12 +79,13 @@ public class ConjuntoCartas {
 	    return true;
 	}
 	
-	public boolean copiarConjunto(ConjuntoCartas lugarDeGuardado) {
-	    lugarDeGuardado = new ConjuntoCartas();
+	public ConjuntoCartas devolverCopiaConjunto() {
+	    ConjuntoCartas conjuntoCopia = new ConjuntoCartas();
+
 	    for (int i=1;i<=this.getCantidadCartas();i++) {
-		lugarDeGuardado.añadirCarta(this.getCarta(i));
+		conjuntoCopia.añadirCarta(this.getCarta(i));
 	    }
-	    return true;
+	    return conjuntoCopia;
 	}
 	
 	public ConjuntoCartas getCartas(int[] posiciones) {
@@ -105,7 +106,7 @@ public class ConjuntoCartas {
 	    return conjunto;
 		
 	}
-	
+
 	public String toString() {
 	    if (this.getCantidadCartas()==0) {
 		return "[NO HAY CARTAS]";

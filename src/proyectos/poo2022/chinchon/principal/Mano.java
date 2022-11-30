@@ -44,6 +44,9 @@ public class Mano extends ConjuntoCartas{
     
     
     private static int sumarTotal(ConjuntoCartas conjuntoASumar) {
+	if (conjuntoASumar==null) {
+	    return 0;
+	}
 	int resultado= 0;
 	for (int i=1; i<=conjuntoASumar.getCantidadCartas();i++) {
 	    resultado = resultado + conjuntoASumar.getCarta(i).getNumero();
@@ -61,11 +64,7 @@ public class Mano extends ConjuntoCartas{
         return textoSalida;
     }
 
-    public int getValor(Jugada jugada1, Jugada jugada2) {
-	System.out.println("Hacer get valor mano");
-	// TODO Auto-generated method stub
-	return 0;
-    }
+
 
 
     

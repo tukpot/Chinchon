@@ -15,7 +15,7 @@ public class Controlador implements Observador {
 	
 	public Controlador(Juego modelo, IVista vista) {
 	    this.modelo 				= modelo;
-	    this.vista 				= vista;
+	    this.vista 					= vista;
 	    this.vista.setControlador(this);
 	    this.modelo.agregarObservador(this);
 	}

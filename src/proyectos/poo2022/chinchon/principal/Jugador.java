@@ -32,9 +32,6 @@ public class Jugador  {
 		}
 	
 	
-	public void jugar() {
-		
-		}
 
 	public Mano getMano() {
 		return this.mano;
@@ -70,11 +67,11 @@ public class Jugador  {
 
 
 	public void añadirPuntosMano() {
-	    if ((this.esElJugadorQueCerro) && (this.getMano().getValor(this.jugada1,this.jugada2)==0)) {
+	    if ((this.esElJugadorQueCerro) && (this.getMano().calcularPuntajeRestante(this.jugada1,this.jugada2)==0)) {
 		this.puntos = this.puntos -10;
 	    }
 	    else {
-		this.puntos = this.puntos + this.getMano().getValor(this.jugada1,this.jugada2);
+		this.puntos = this.puntos + this.getMano().calcularPuntajeRestante(this.jugada1,this.jugada2);
 	    }
 	    
 	}

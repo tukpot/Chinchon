@@ -4,9 +4,6 @@ public interface IVista {
 
 	void setControlador(Controlador controlador);
 	void iniciar();
-	//void terminarTurno();
-	//void nuevoTurno();
-	//void mostrarManoYPila();
 	void actualizarManoYPila();
 	void descartar();
 	void partidaIniciada();
