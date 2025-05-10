@@ -37,6 +37,50 @@ public class PseudoConsola extends JFrame implements IVista {
     private Flujo 		flujoActual;
     private Flujo		flujoAnterior;
 
+    public PseudoConsola() {
+        setFont(new Font("Monospaced", Font.PLAIN, 12));
+        setTitle("Chinchón :-)");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setBounds(100, 100, 733, 424);
+        contentPane = new JPanel();
+        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+        setContentPane(contentPane);
+        contentPane.setLayout(null);
+
+        JScrollPane scrollPane = new JScrollPane();
+        scrollPane.setBounds(10, 10, 540, 319);
+        contentPane.add(scrollPane);
+
+        this.memo_display = new JTextArea();
+        scrollPane.setViewportView(memo_display);
+        memo_display.setEditable(false);
+        memo_display.setFont(new Font("Monospaced", Font.PLAIN, 16));
+
+        this.edit_input = new JTextField();
+        edit_input.setFont(new Font("Monospaced", Font.PLAIN, 16));
+        edit_input.setBounds(10, 339, 540, 38);
+        contentPane.add(edit_input);
+        edit_input.setColumns(10);
+
+        this.butt_enter = new JButton("Enter");
+        butt_enter.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                manejadorDeComandos();
+                limpiarBarraComandos();
+            }
+        });
+        butt_enter.setBounds(560, 339, 149, 38);
+        contentPane.add(butt_enter);
+
+        display_mano_y_pila = new JTextArea();
+        display_mano_y_pila.setFont(new Font("Monospaced", Font.PLAIN, 14));
+        display_mano_y_pila.setBounds(560, 10, 149, 319);
+        contentPane.add(display_mano_y_pila);
+        display_mano_y_pila.setEditable(false);
+        display_mano_y_pila.setLineWrap(true);
+    }
+
     public void iniciar() {
         this.inicioGrafico();
         this.solicitarNombre();
@@ -59,49 +103,6 @@ public class PseudoConsola extends JFrame implements IVista {
         });
     }
 
-    public PseudoConsola() {
-        setFont(new Font("Monospaced", Font.PLAIN, 12));
-        setTitle("Chinchón :-)");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 733, 424);
-        contentPane = new JPanel();
-        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-
-        setContentPane(contentPane);
-        contentPane.setLayout(null);
-
-        JScrollPane scrollPane = new JScrollPane();
-        scrollPane.setBounds(10, 10, 540, 319);
-        contentPane.add(scrollPane);
-        
-                this.memo_display = new JTextArea();
-                scrollPane.setViewportView(memo_display);
-                memo_display.setEditable(false);
-                memo_display.setFont(new Font("Monospaced", Font.PLAIN, 16));
-
-        this.edit_input = new JTextField();
-        edit_input.setFont(new Font("Monospaced", Font.PLAIN, 16));
-        edit_input.setBounds(10, 339, 540, 38);
-        contentPane.add(edit_input);
-        edit_input.setColumns(10);
-
-        this.butt_enter = new JButton("Enter");
-        butt_enter.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                manejadorDeComandos();
-                limpiarBarraComandos();
-            }
-        });
-        butt_enter.setBounds(560, 339, 149, 38);
-        contentPane.add(butt_enter);
-                
-                        display_mano_y_pila = new JTextArea();
-                        display_mano_y_pila.setFont(new Font("Monospaced", Font.PLAIN, 14));
-                        display_mano_y_pila.setBounds(560, 10, 149, 319);
-                        contentPane.add(display_mano_y_pila);
-                        display_mano_y_pila.setEditable(false);
-                        display_mano_y_pila.setLineWrap(true);
-    }
 
     private void manejadorDeComandos() {
 	this.clear();
