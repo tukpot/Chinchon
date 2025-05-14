@@ -4,7 +4,44 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fc6cd098-3837-4fc4-849d-1215d4953dba" name="Changes" comment="feat: first renders at ClienteGrafico2d" />
+    <list default="true" id="fc6cd098-3837-4fc4-849d-1215d4953dba" name="Changes" comment="feat: first renders at ClienteGrafico2d">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/Chinchon/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/Chinchon/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/Chinchon/proyectos/poo2022/chinchon/clientes/clienteGrafico2d/ClienteGrafico2d$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/Chinchon/proyectos/poo2022/chinchon/clientes/clienteGrafico2d/ClienteGrafico2d$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/Chinchon/proyectos/poo2022/chinchon/clientes/clienteGrafico2d/ClienteGrafico2d$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/Chinchon/proyectos/poo2022/chinchon/clientes/clienteGrafico2d/ClienteGrafico2d$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/Chinchon/proyectos/poo2022/chinchon/clientes/clienteGrafico2d/ClienteGrafico2d.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/Chinchon/proyectos/poo2022/chinchon/clientes/clienteGrafico2d/ClienteGrafico2d.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/Chinchon/proyectos/poo2022/chinchon/clientes/pseudoconsola/PseudoConsola$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/Chinchon/proyectos/poo2022/chinchon/clientes/pseudoconsola/PseudoConsola$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/Chinchon/proyectos/poo2022/chinchon/clientes/pseudoconsola/PseudoConsola$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/Chinchon/proyectos/poo2022/chinchon/clientes/pseudoconsola/PseudoConsola$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/Chinchon/proyectos/poo2022/chinchon/clientes/pseudoconsola/PseudoConsola$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/Chinchon/proyectos/poo2022/chinchon/clientes/pseudoconsola/PseudoConsola$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/Chinchon/proyectos/poo2022/chinchon/clientes/pseudoconsola/PseudoConsola.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/Chinchon/proyectos/poo2022/chinchon/clientes/pseudoconsola/PseudoConsola.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/Chinchon/proyectos/poo2022/chinchon/clientes/pseudoconsola/flujos/Flujo.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/Chinchon/proyectos/poo2022/chinchon/clientes/pseudoconsola/flujos/Flujo.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/Chinchon/proyectos/poo2022/chinchon/clientes/pseudoconsola/flujos/FlujoCerrarRonda$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/Chinchon/proyectos/poo2022/chinchon/clientes/pseudoconsola/flujos/FlujoCerrarRonda$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/Chinchon/proyectos/poo2022/chinchon/clientes/pseudoconsola/flujos/FlujoCerrarRonda.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/Chinchon/proyectos/poo2022/chinchon/clientes/pseudoconsola/flujos/FlujoCerrarRonda.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/Chinchon/proyectos/poo2022/chinchon/enumerados/EstadoPrograma.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/Chinchon/proyectos/poo2022/chinchon/enumerados/EstadoPrograma.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/Chinchon/proyectos/poo2022/chinchon/enumerados/Evento.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/Chinchon/proyectos/poo2022/chinchon/enumerados/Evento.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/Chinchon/proyectos/poo2022/chinchon/enumerados/Palo.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/Chinchon/proyectos/poo2022/chinchon/enumerados/Palo.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/Chinchon/proyectos/poo2022/chinchon/interactuar/Controlador$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/Chinchon/proyectos/poo2022/chinchon/interactuar/Controlador$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/Chinchon/proyectos/poo2022/chinchon/interactuar/Controlador.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/Chinchon/proyectos/poo2022/chinchon/interactuar/Controlador.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/Chinchon/proyectos/poo2022/chinchon/interactuar/IVista.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/Chinchon/proyectos/poo2022/chinchon/interactuar/IVista.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/Chinchon/proyectos/poo2022/chinchon/interactuar/Observable.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/Chinchon/proyectos/poo2022/chinchon/interactuar/Observable.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/Chinchon/proyectos/poo2022/chinchon/interactuar/Observador.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/Chinchon/proyectos/poo2022/chinchon/interactuar/Observador.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/Chinchon/proyectos/poo2022/chinchon/mains/ConectarClienteGrafico.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/Chinchon/proyectos/poo2022/chinchon/mains/ConectarClienteGrafico.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/Chinchon/proyectos/poo2022/chinchon/mains/MultijugadorLocal.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/Chinchon/proyectos/poo2022/chinchon/mains/MultijugadorLocal.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/Chinchon/proyectos/poo2022/chinchon/principal/Carta.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/Chinchon/proyectos/poo2022/chinchon/principal/Carta.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/Chinchon/proyectos/poo2022/chinchon/principal/ConjuntoCartas$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/Chinchon/proyectos/poo2022/chinchon/principal/ConjuntoCartas$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/Chinchon/proyectos/poo2022/chinchon/principal/ConjuntoCartas.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/Chinchon/proyectos/poo2022/chinchon/principal/ConjuntoCartas.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/Chinchon/proyectos/poo2022/chinchon/principal/Juego.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/Chinchon/proyectos/poo2022/chinchon/principal/Juego.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/Chinchon/proyectos/poo2022/chinchon/principal/Jugada.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/Chinchon/proyectos/poo2022/chinchon/principal/Jugada.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/Chinchon/proyectos/poo2022/chinchon/principal/Jugador.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/Chinchon/proyectos/poo2022/chinchon/principal/Jugador.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/Chinchon/proyectos/poo2022/chinchon/principal/Mano.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/Chinchon/proyectos/poo2022/chinchon/principal/Mano.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/Chinchon/proyectos/poo2022/chinchon/principal/Mazo.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/Chinchon/proyectos/poo2022/chinchon/principal/Mazo.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/Chinchon/proyectos/poo2022/chinchon/principal/PilaCartas.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/Chinchon/proyectos/poo2022/chinchon/principal/PilaCartas.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/Chinchon/proyectos/poo2022/chinchon/principal/PilaDescarte.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/Chinchon/proyectos/poo2022/chinchon/principal/PilaDescarte.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/Chinchon/proyectos/poo2022/chinchon/principal/Ronda.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/Chinchon/proyectos/poo2022/chinchon/principal/Ronda.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/Chinchon/proyectos/poo2022/chinchon/utilidades/MetodosUtiles.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/Chinchon/proyectos/poo2022/chinchon/utilidades/MetodosUtiles.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/proyectos/poo2022/chinchon/clientes/clienteGrafico2d/ClienteGrafico2d.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/proyectos/poo2022/chinchon/clientes/clienteGrafico2d/ClienteGrafico2d.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -55,7 +92,7 @@
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;/home/jonas/IdeaProjects/Chinchon/src&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
     &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
@@ -67,7 +104,7 @@
       <command value="package proyectos.poo2022.chinchon.mains" />
     </option>
   </component>
-  <component name="RunManager" selected="Application.ConectarClienteGrafico">
+  <component name="RunManager" selected="Application.MultijugadorLocal">
     <configuration name="ConectarClienteGrafico" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="proyectos.poo2022.chinchon.mains.ConectarClienteGrafico" />
       <module name="Chinchon" />
@@ -101,8 +138,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.ConectarClienteGrafico" />
         <item itemvalue="Application.MultijugadorLocal" />
+        <item itemvalue="Application.ConectarClienteGrafico" />
       </list>
     </recent_temporary>
   </component>

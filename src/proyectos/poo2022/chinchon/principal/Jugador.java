@@ -1,88 +1,104 @@
 package proyectos.poo2022.chinchon.principal;
 
-import proyectos.poo2022.chinchon.interactuar.Controlador;
+import java.util.Random;
+import java.util.ResourceBundle.Control;
 
-public class Jugador  {
-	private			Mano 				mano 			= new Mano();
-	private 		int 				puntos 			= 0;
-	private 		String				nombre;	
-	private 		Controlador 			controlador;
-	private			boolean				listoParaJugar 		= false;
-	private			boolean				esElJugadorQueCerro	= false;
-	private 		Jugada 				jugada1;
-	private 		Jugada 				jugada2;
-	
+import proyectos.poo2022.chinchon.enumerados.Evento;
+import proyectos.poo2022.chinchon.interactuar.Controlador;
+import proyectos.poo2022.chinchon.interactuar.Observable;
+import proyectos.poo2022.chinchon.interactuar.Observador;
+
+public class Jugador implements Observable {
+	Controlador controlador;
+	private Observador observador;
+	private Mano mano = new Mano();
+	private int puntos = 0;
+	private String nombre;
+	private boolean listoParaJugar = false;
 
 	public Jugador(String nombre) {
 		this.nombre = nombre;
 	}
-	
-	
+
+	public void notificar(Object evento) {
+		this.observador.actualizar(evento, this);
+	}
+
 	public void tomarCartaMazo(Mazo mazoIn) {
 		this.mano.añadirCarta(mazoIn.tomarCartaTope());
-		}
-		
-	public void descartarCarta(int cartaATirar, PilaDescarte pilaDescarte) { //añadir forma de recibir carta
+	}
+
+	public void descartarCarta(int cartaATirar, PilaDescarte pilaDescarte) { // añadir forma de recibir carta
 		this.mano.transferirCarta(cartaATirar, pilaDescarte);
-		}
-	
+	}
+
 	public void tomarCartaPilaDescarte(PilaDescarte pilaDescarteIn) {
 		Carta cartaRecienTomada = pilaDescarteIn.tomarCartaTope();
 		this.mano.añadirCarta(cartaRecienTomada);
-		}
-	
-	
+	}
 
 	public Mano getMano() {
 		return this.mano;
 	}
 
-
-	public void setControlador(Controlador controlador) {
-		this.controlador = controlador;
-	}
-
-
 	public String getNombre() {
 		return this.nombre;
 	}
 
-
 	public void setListoParaJugar(boolean listo) {
-	    this.listoParaJugar = listo;
+		this.listoParaJugar = listo;
 	}
-
 
 	public boolean getListoParaJugar() {
-	    return this.listoParaJugar;
+		return this.listoParaJugar;
 	}
-	
+
 	protected void resetMano() {
-	   this.mano = new Mano();
+		this.mano = new Mano();
 	}
 
 	public int getPuntos() {
-	    return puntos;
+		return puntos;
 	}
 
+	public void setControlador(Controlador controlador) {
+		this.controlador = controlador;
+		this.agregarObservador(controlador);
+	}
 
 	public void añadirPuntosMano() {
-	    if ((this.esElJugadorQueCerro) && (this.getMano().calcularPuntajeRestante(this.jugada1,this.jugada2)==0)) {
-		this.puntos = this.puntos -10;
-	    }
-	    else {
-		this.puntos = this.puntos + this.getMano().calcularPuntajeRestante(this.jugada1,this.jugada2);
-	    }
-	    
+		this.puntos = this.mano.calcularPuntajeRestante();
+		this.puntos = this.puntos + 100;
 	}
 
+	public static String generarNombreAleatorio() {
+		String[] adjetivos = {
+				"misterioso", "vengativo", "cansado", "anciano", "astuto", "feroz", "gentil",
+				"silencioso", "ruidoso", "salvaje", "errante", "temible", "noble",
+				"sombrío", "valiente", "enojado", "estoico", "sabio", "congelado", "llameante",
+				"hastiado", "meloso", "amoroso", "dormilón", "gordo", "bebé", "poderoso", "veloz", "brillante",
+				"divertido", "aburrido", "anarquista", "sagaz", "maníaco", "juguetón", "jocoso", "enérgico"
+		};
 
-	public void setJugadas(Jugada jugada1, Jugada jugada2) {
-	    this.jugada1 =	jugada1;
-	    this.jugada2 =	jugada2;
+		String[] razasDeOso = {
+				"Grizzly", "Kodiak", "Pardo", "Polar", "Negro", "Negro Asiático",
+				"Himalayo", "Panda", "Bezudo", "Malayo", "Solar", "De Anteojos", "Andino",
+				"Tibetano", "Del Gobi", "Siberiano", "Europeo", "Ussuri",
+				"De Kamchatka", "Blanco Ártico Canadiense", "Alaska Peninsular", "Gigante de Qinling"
+		};
+
+		Random rand = new Random();
+		String razaAleatoria = razasDeOso[rand.nextInt(razasDeOso.length)];
+		String adjetivoAleatorio = adjetivos[rand.nextInt(adjetivos.length)];
+
+		return razaAleatoria + " " + adjetivoAleatorio;
 	}
 
-	public void setEsElJugadorQueCerro(boolean siONo) {
-	    this.esElJugadorQueCerro = siONo;
+	public void agregarObservador(Observador observador) {
+		if (this.observador == null) {
+			this.observador = observador;
+		} else {
+			throw new Error("Observador ya seteado para el jugador [" + this.getNombre() + "]");
+		}
 	}
 }

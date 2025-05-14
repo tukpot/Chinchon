@@ -3,12 +3,19 @@ package proyectos.poo2022.chinchon.interactuar;
 public interface IVista {
 
 	void setControlador(Controlador controlador);
+
 	void iniciar();
-	void actualizarManoYPila();
-	void descartar();
-	void partidaIniciada();
+
 	void bloquear();
-	void jugarTurno();
+
+	void actualizarManoYPila();
+
+	void tomarDeMazoOPila();
+
+	void descartarOCerrar();
+
 	void mostrarPuntos();
+
+	void perder();
 
 }
