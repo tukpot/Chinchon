@@ -11,7 +11,7 @@ public class Juego implements Observable {
 	private Ronda ronda;
 	private int jugadorMano = -1;
 
-	public void nuevaRonda(int jugadorMano) {
+	public void nuevaRonda() {
 		this.cambiarJugadorMano();
 		this.ronda = new Ronda(this.jugadorMano, this.jugadores);
 		this.notificar(Evento.NUEVO_TURNO);
@@ -98,13 +98,16 @@ public class Juego implements Observable {
 				return;
 			}
 		}
-		this.nuevaRonda(this.jugadorMano);
+		this.nuevaRonda();
 	}
 
 	public void eliminarPerdedor(Jugador perdedor) {
 		perdedor.notificar(Evento.PERDISTE);
 		this.jugadores.remove(perdedor);
-		// this.observadores.remove(perdedor);
+	}
+
+	public void declararGanador(Jugador ganador) {
+		ganador.notificar(Evento.GANASTE);
 	}
 
 	public void terminarRonda(Jugador jugadorQueCierra) {
@@ -113,8 +116,12 @@ public class Juego implements Observable {
 			return;
 
 		int puntajeDeCierre = jugadorQueCierra.getMano().cerrarMano();
-		// if puntajeDeCierre menor a -100, declarar como ganador al jugador que cierra
-		// por chinchon
+		if (puntajeDeCierre <= -100) {
+			// victoria total y absoluta por chinchon
+			declararGanador(jugadorQueCierra);
+			return;
+		}
+
 		this.ronda.sumarPuntos();
 		this.notificar(Evento.RONDA_TERMINADA);
 		for (Jugador jugador : this.jugadores) {
@@ -122,6 +129,11 @@ public class Juego implements Observable {
 				eliminarPerdedor(jugador);
 			}
 		}
+		if (this.getCantidadJugadores() < 2) {
+			declararGanador(this.getJugador(1));
+		}
+
+		this.nuevaRonda();
 		// echar a jugadores con más de 100 puntos
 		// si queda un único jugador, declararlo ganador absoluto god dios el mejor de
 		// todos.

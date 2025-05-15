@@ -18,4 +18,6 @@ public interface IVista {
 
 	void perder();
 
+    void ganar();
+
 }

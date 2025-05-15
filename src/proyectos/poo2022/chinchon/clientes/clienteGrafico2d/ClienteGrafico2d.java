@@ -1,6 +1,7 @@
 package proyectos.poo2022.chinchon.clientes.clienteGrafico2d;
 
 import proyectos.poo2022.chinchon.enumerados.EstadoPrograma;
+import proyectos.poo2022.chinchon.enumerados.Evento;
 import proyectos.poo2022.chinchon.enumerados.Palo;
 import proyectos.poo2022.chinchon.interactuar.Controlador;
 import proyectos.poo2022.chinchon.interactuar.IVista;
@@ -23,6 +24,7 @@ public class ClienteGrafico2d extends JFrame implements IVista {
     private JButton botonCerrarRonda;
     private JTextArea textAreaDebug;
     private JLabel labelJugadorActual;
+    private JTextField inputNombre;
 
     private EstadoPrograma estadoActual;
     private Controlador controlador;
@@ -31,7 +33,7 @@ public class ClienteGrafico2d extends JFrame implements IVista {
         setFont(new Font("Monospaced", Font.PLAIN, 12));
         setTitle("Chinchón :-)");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 733, 424);
+        setBounds(100, 100, 800, 800);
 
         contentPane = new JPanel() {
             @Override
@@ -46,73 +48,51 @@ public class ClienteGrafico2d extends JFrame implements IVista {
             }
         };
         contentPane.setOpaque(false);
-        contentPane.setBackground(new Color(0, 0, 0, 0));
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-        setContentPane(contentPane);
         contentPane.setLayout(new BorderLayout());
+        setContentPane(contentPane);
 
-        // Panel para el mazo y la pila en la parte superior
-        JPanel panelMazoYPila = new JPanel();
-        panelMazoYPila.setLayout(new FlowLayout(FlowLayout.CENTER, 100, 20)); // Espaciado horizontal controlado
+        // panel para el mazo y la pila en la parte superior
+        JPanel panelMazoYPila = new JPanel(new FlowLayout(FlowLayout.CENTER, 100, 20));
         panelMazoYPila.setPreferredSize(new Dimension(540, 300));
         panelMazoYPila.setOpaque(false);
-        panelMazoYPila.setBackground(new Color(0, 0, 0, 0));
         contentPane.add(panelMazoYPila, BorderLayout.NORTH);
 
-        // Botón Mazo
-        JButton botonMazo = new JButton("Mazo jijiji");
-        this.botonMazo = botonMazo;
-        botonMazo.setPreferredSize(new Dimension(200, 250)); // Controlar tamaño sin estirar
+        botonMazo = new JButton("Mazo jijiji");
+        botonMazo.setPreferredSize(new Dimension(200, 250));
         botonMazo.setFont(new Font("Monospaced", Font.BOLD, 14));
         botonMazo.setContentAreaFilled(false);
         botonMazo.setFocusPainted(false);
-        botonMazo.setBackground(new Color(0, 0, 0, 0));
-        botonMazo.addActionListener(e -> {
-            mazoPresionado();
-        });
+        botonMazo.addActionListener(e -> mazoPresionado());
         panelMazoYPila.add(botonMazo);
 
-        // Botón Pila
-        JButton botonPila = new JButton("Pila");
-        this.botonPila = botonPila;
-        botonPila.setPreferredSize(new Dimension(200, 250)); // Misma lógica que el mazo
+        botonPila = new JButton("Pila");
+        botonPila.setPreferredSize(new Dimension(200, 250));
         botonPila.setFont(new Font("Monospaced", Font.BOLD, 14));
         botonPila.setContentAreaFilled(false);
         botonPila.setFocusPainted(false);
-        botonPila.setBackground(new Color(0, 0, 0, 0));
-        botonPila.addActionListener(e -> {
-            // lógica de la pila
-            pilaPresionada();
-        });
+        botonPila.addActionListener(e -> pilaPresionada());
         panelMazoYPila.add(botonPila);
 
-        // panel botoncitos cosillas
-        JPanel panelAcciones = new JPanel();
-        contentPane.add(panelAcciones, BorderLayout.CENTER);
+        // panel de acciones en el centro
+        JPanel panelAcciones = new JPanel(new FlowLayout(FlowLayout.CENTER, 100, 20));
         panelAcciones.setOpaque(false);
-        panelAcciones.setBackground(new Color(0, 0, 0, 0));
-
-        panelAcciones.setLayout(new FlowLayout(FlowLayout.CENTER, 100, 20)); // Espaciado horizontal controlado
         panelAcciones.setPreferredSize(new Dimension(240, 100));
+        contentPane.add(panelAcciones, BorderLayout.CENTER);
 
-        JButton botonCerrarRonda = new JButton("Cerrar Ronda");
-        botonCerrarRonda.addActionListener(e -> this.terminarRonda());
-        botonCerrarRonda.setPreferredSize(new Dimension(120, 60));
-        this.botonCerrarRonda = botonCerrarRonda;
-
-        JLabel labelJugadorActual = new JLabel("ESTÁ JUGANDO:");
-        this.labelJugadorActual = labelJugadorActual;
+        labelJugadorActual = new JLabel("ESTÁ JUGANDO:");
         labelJugadorActual.setOpaque(true);
-        panelAcciones.add(labelJugadorActual);
-        panelAcciones.add(botonCerrarRonda);
 
-        // Panel de texto de Debug
-        JPanel panelDebug = new JPanel();
-        panelDebug.setLayout(new BorderLayout());
-        panelDebug.setPreferredSize(new Dimension(150, 50));
-        panelDebug.setOpaque(false);
-        panelDebug.setBackground(new Color(0, 0, 0, 0));
-        contentPane.add(panelDebug, BorderLayout.EAST);
+        inputNombre = new JTextField("ingrese su nombre aquí");
+        inputNombre.setOpaque(true);
+        this.inputNombre = inputNombre;
+        panelAcciones.add(inputNombre);
+        panelAcciones.add(labelJugadorActual);
+
+        botonCerrarRonda = new JButton("Cerrar Ronda");
+        botonCerrarRonda.setPreferredSize(new Dimension(120, 60));
+        botonCerrarRonda.addActionListener(e -> botonAccionPresionado());
+        panelAcciones.add(botonCerrarRonda);
 
         textAreaDebug = new JTextArea();
         textAreaDebug.setFont(new Font("Monospaced", Font.PLAIN, 12));
@@ -121,51 +101,44 @@ public class ClienteGrafico2d extends JFrame implements IVista {
         textAreaDebug.setWrapStyleWord(true);
 
         JScrollPane scrollPaneDebug = new JScrollPane(textAreaDebug);
-        scrollPaneDebug.setOpaque(false);
-        scrollPaneDebug.getViewport().setOpaque(false);
         scrollPaneDebug.setBorder(null);
-        panelDebug.add(scrollPaneDebug, BorderLayout.CENTER);
+        scrollPaneDebug.getViewport().setOpaque(false);
 
-        // Panel de botones de las cartas de la mano
-        JPanel panelBotones = new JPanel();
-        panelBotones.setLayout(new GridLayout(1, 8, 2, 0));
-        panelBotones.setPreferredSize(new Dimension(540, 200));
+        int debugWidth = getWidth() / 3;
+        JPanel panelDebug = new JPanel(new BorderLayout());
+        panelDebug.setBorder(new EmptyBorder(0, 0, 30, 0));
+        panelDebug.setPreferredSize(new Dimension(debugWidth, 0));
+        panelDebug.setOpaque(false);
+        panelDebug.add(scrollPaneDebug, BorderLayout.CENTER);
+        contentPane.add(panelDebug, BorderLayout.EAST);
+
+        // Panel de botones de las cartas de la mano en la parte inferior
+        JPanel panelBotones = new JPanel(new GridLayout(1, 8, 2, 0));
+        panelBotones.setPreferredSize(new Dimension(540, 222));
         panelBotones.setOpaque(false);
-        panelBotones.setBackground(new Color(0, 0, 0, 0));
         contentPane.add(panelBotones, BorderLayout.SOUTH);
 
-        for (int i = 0; i <= 7; i++) {
+        for (int i = 0; i < botonesCartasMano.length; i++) {
             JButton boton = new JButton();
             boton.setFont(new Font("Monospaced", Font.BOLD, 14));
             boton.setContentAreaFilled(false);
-            // boton.setBorderPainted(false);
             boton.setFocusPainted(false);
-            // boton.setOpaque(false);
-            boton.setBackground(new Color(0, 0, 0, 0));
-            boton.setText(null);
             final int numeroBoton = i;
             boton.addActionListener(e -> cartaManoPresionada(numeroBoton));
             botonesCartasMano[i] = boton;
             panelBotones.add(boton);
         }
 
-        setSize(new Dimension(800, 800));
         setLocationRelativeTo(null);
     }
 
     public void iniciar() {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
+        EventQueue.invokeLater(() -> {
+            setVisible(true);
+
+            setNombreJugador("2D: " + Jugador.generarNombreAleatorio());
+            controlador.setListoParaJugar(true);
         });
-        this.setNombreJugador("2D: " + Jugador.generarNombreAleatorio());
-        this.controlador.setListoParaJugar(true);
-        this.controlador.empezarAJugar();
     }
 
     public void setControlador(Controlador controlador) {
@@ -186,7 +159,6 @@ public class ClienteGrafico2d extends JFrame implements IVista {
         this.dibujarCarta(this.botonPila, this.controlador.getTopePila());
         this.dibujarCarta(this.botonMazo, null);
     }
-
 
     public void bloquear() {
         this.labelJugadorActual.setText("Es turno del jugador: " + this.controlador.getJugadorActual().getNombre());
@@ -209,9 +181,26 @@ public class ClienteGrafico2d extends JFrame implements IVista {
         }
     }
 
+    private void botonAccionPresionado() {
+        // dependiendo de el estado actual del programa, hace cosas distintas
+        switch ((EstadoPrograma) this.estadoActual) {
+            default:
+                break;
+
+            case REGISTRANDO_JUGADOR:
+                this.setNombreJugador("2D: " + Jugador.generarNombreAleatorio());
+                break;
+
+            case DESCARTAR_O_CERRAR:
+                this.terminarRonda();
+                break;
+
+        }
+    }
+
     // Método para actualizar el área de texto de debug
     private void printDebug(String mensaje) {
-        textAreaDebug.setText(textAreaDebug.getText() + "\n" + mensaje);
+        textAreaDebug.setText(textAreaDebug.getText() + mensaje + "\n");
     }
 
     private void clearDebug() {
@@ -265,24 +254,19 @@ public class ClienteGrafico2d extends JFrame implements IVista {
     }
 
     private void mazoPresionado() {
-        printDebug("mazo presionado");
         if (this.estadoActual != EstadoPrograma.ELIGIENDO_MAZO_O_PILA)
             return;
         this.controlador.tomarTopeMazo();
     }
 
     private void pilaPresionada() {
-        printDebug("pila presionada");
         if (this.estadoActual != EstadoPrograma.ELIGIENDO_MAZO_O_PILA)
             return;
         this.controlador.tomarTopePilaDescarte();
     }
 
     private void terminarRonda() {
-        printDebug("terminar ronda presionado");
-        if (this.estadoActual == EstadoPrograma.DESCARTAR_O_CERRAR) {
-            controlador.terminarRonda();
-        }
+        controlador.terminarRonda();
     }
 
     private Mano getMano() {
@@ -304,12 +288,18 @@ public class ClienteGrafico2d extends JFrame implements IVista {
     }
 
     @Override
-    public void perder() {
-        this.printDebug("PERDISTE!!!");
-        this.setEstadoActual(EstadoPrograma.PERDIO);
-        // PRINTEAR LISTA DE GANADORES DE OTRAS PARTIDAS
-        this.controlador = null; // esto actúa como kick
+    public void ganar() {
+        this.clearDebug();
+        this.printDebug("¡GANASTE!");
+        this.printDebug("Estos son los puntajes finales:");
+        this.mostrarPuntos();
+        this.setEstadoActual(EstadoPrograma.GANO);
+    }
 
+    @Override
+    public void perder() {
+        this.printDebug("¡PERDISTE!");
+        this.setEstadoActual(EstadoPrograma.PERDIO);
     }
 
 }

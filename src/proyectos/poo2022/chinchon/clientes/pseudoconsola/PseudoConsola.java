@@ -111,7 +111,7 @@ public class PseudoConsola extends JFrame implements IVista {
             default:
                 break;
 
-            case MENU:
+            case ESPERANDO_LISTO_PARA_JUGAR:
                 this.inputMenuPrincipal(inputConsola());
                 break;
 
@@ -207,7 +207,7 @@ public class PseudoConsola extends JFrame implements IVista {
     }
 
     public void mostrarMenuPrincipal() {
-        this.setEstadoActual(EstadoPrograma.MENU);
+        this.setEstadoActual(EstadoPrograma.ESPERANDO_LISTO_PARA_JUGAR);
         this.println("Opciones:");
         this.println("1. Prepararse para jugar.");
         this.println("2. Salir del juego.");

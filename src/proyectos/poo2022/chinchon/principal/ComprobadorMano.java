@@ -19,12 +19,7 @@ public class ComprobadorMano {
         }
 
         List<Carta> usadasSeis = buscarCombinacion(combinacionesPosibles, 6, new ArrayList<>(), 0);
-        if (usadasSeis != null) {
-            Carta sobrante = encontrarCartaSobrante(mano, usadasSeis);
-            // System.out.println("Carta sobrante: " + sobrante.getNumero() + " de " +
-            // sobrante.getPalo());
-            return true;
-        }
+        if (usadasSeis != null) return true;
 
         return false;
     }

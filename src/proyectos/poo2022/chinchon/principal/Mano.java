@@ -15,7 +15,6 @@ public class Mano extends ConjuntoCartas {
 			throw new Error("La mano no es cerrable.");
 
 		if (resultadoCierre.cartaCorte != null) {
-			System.out.println(resultadoCierre.cartaCorte.toString());
 			this.quitarCarta(resultadoCierre.cartaCorte);
 		}
 
@@ -44,8 +43,6 @@ public class Mano extends ConjuntoCartas {
 				return false;
 
 			if ((cartaAnterior.getNumero() + 1) != cartaActual.getNumero()) {
-				System.out.println(
-						"no es. anterior: " + cartaAnterior.getNumero() + "   actual: " + cartaActual.getNumero());
 				return false;
 			}
 

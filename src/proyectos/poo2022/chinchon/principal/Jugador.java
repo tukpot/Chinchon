@@ -67,8 +67,7 @@ public class Jugador implements Observable {
 	}
 
 	public void añadirPuntosMano() {
-		this.puntos = this.mano.calcularPuntajeRestante();
-		this.puntos = this.puntos + 100;
+		this.puntos = this.puntos + this.mano.calcularPuntajeRestante();
 	}
 
 	public static String generarNombreAleatorio() {

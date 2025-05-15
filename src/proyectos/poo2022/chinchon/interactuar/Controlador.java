@@ -21,7 +21,6 @@ public class Controlador implements Observador {
 	}
 
 	public void actualizar(Object evento, Observable observado) {
-		System.out.println("Controlador de " + this.getJugador().getNombre() + " evento: " + evento);
 		if (evento instanceof Evento) {
 			switch ((Evento) evento) {
 				default:
@@ -48,10 +47,16 @@ public class Controlador implements Observador {
 						vista.bloquear();
 					}
 					break;
+
+				case GANASTE:
+					vista.ganar();
+					vista.bloquear();
+					return;
 				
 				case PERDISTE:
 					vista.perder();
-					break;
+					vista.bloquear();
+					return;
 
 				case RONDA_TERMINADA:
 					this.vista.mostrarPuntos();
@@ -63,9 +68,6 @@ public class Controlador implements Observador {
 		vista.actualizarManoYPila();
 	}
 
-	public void juegoNuevo(int cantidadJugadores) {
-		this.modelo.nuevaRonda(cantidadJugadores);
-	}
 
 	public Jugador getJugadorActual() {
 		return modelo.getJugadorActual();
@@ -101,13 +103,15 @@ public class Controlador implements Observador {
 		return this.modelo.validarNombre(nombre);
 	}
 
-	public void setListoParaJugar(boolean listo) {
-		this.jugador.setListoParaJugar(listo);
+	public boolean getListoParaJugar(){
+		return this.jugador.getListoParaJugar();
 	}
 
-	public void empezarAJugar() {
+	public void setListoParaJugar(boolean listo) {
+		this.jugador.setListoParaJugar(listo);
 		this.modelo.empezarAJugar();
 	}
+
 
 	private void nuevoTurno() {
 		if (this.jugador == this.modelo.getJugadorActual()) {
