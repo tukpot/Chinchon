@@ -1,11 +1,9 @@
 package proyectos.poo2022.chinchon.interactuar;
-
-import java.util.List;
-
 import proyectos.poo2022.chinchon.enumerados.*;
 import proyectos.poo2022.chinchon.principal.Carta;
 import proyectos.poo2022.chinchon.principal.Juego;
 import proyectos.poo2022.chinchon.principal.Jugador;
+
 
 public class Controlador implements Observador {
 
@@ -21,6 +19,7 @@ public class Controlador implements Observador {
 	}
 
 	public void actualizar(Object evento, Observable observado) {
+		System.out.println("evento: " + evento);
 		if (evento instanceof Evento) {
 			switch ((Evento) evento) {
 				default:
@@ -50,9 +49,8 @@ public class Controlador implements Observador {
 
 				case GANASTE:
 					vista.ganar();
-					vista.bloquear();
 					return;
-				
+
 				case PERDISTE:
 					vista.perder();
 					vista.bloquear();
@@ -67,7 +65,6 @@ public class Controlador implements Observador {
 		}
 		vista.actualizarManoYPila();
 	}
-
 
 	public Jugador getJugadorActual() {
 		return modelo.getJugadorActual();
@@ -103,7 +100,7 @@ public class Controlador implements Observador {
 		return this.modelo.validarNombre(nombre);
 	}
 
-	public boolean getListoParaJugar(){
+	public boolean getListoParaJugar() {
 		return this.jugador.getListoParaJugar();
 	}
 
@@ -111,7 +108,6 @@ public class Controlador implements Observador {
 		this.jugador.setListoParaJugar(listo);
 		this.modelo.empezarAJugar();
 	}
-
 
 	private void nuevoTurno() {
 		if (this.jugador == this.modelo.getJugadorActual()) {

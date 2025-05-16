@@ -7,6 +7,7 @@ import proyectos.poo2022.chinchon.interactuar.IVista;
 import proyectos.poo2022.chinchon.principal.ComprobadorMano;
 import proyectos.poo2022.chinchon.principal.Juego;
 import proyectos.poo2022.chinchon.utilidades.Tests;
+import ar.edu.unlu.rmimvc.servidor.Servidor;
 
 public class MultijugadorLocal {
 
@@ -14,7 +15,7 @@ public class MultijugadorLocal {
 		// Tests.runAllTests();
 		Juego modelo = new Juego();
 
-		IVista vista1 = new ClienteGrafico2d();
+		IVista vista1 = new PseudoConsola();
 		Controlador controlador1 = new Controlador(modelo, vista1);
 
 		IVista vista2 = new ClienteGrafico2d();

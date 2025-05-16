@@ -1,13 +1,10 @@
 package proyectos.poo2022.chinchon.clientes.pseudoconsola;
 
-import proyectos.poo2022.chinchon.clientes.pseudoconsola.flujos.Flujo;
-import proyectos.poo2022.chinchon.clientes.pseudoconsola.flujos.FlujoCerrarRonda;
 import proyectos.poo2022.chinchon.enumerados.EstadoPrograma;
 import proyectos.poo2022.chinchon.enumerados.Palo;
 import proyectos.poo2022.chinchon.interactuar.Controlador;
 import proyectos.poo2022.chinchon.interactuar.IVista;
 import proyectos.poo2022.chinchon.principal.Carta;
-import proyectos.poo2022.chinchon.principal.ConjuntoCartas;
 import proyectos.poo2022.chinchon.principal.Jugador;
 import proyectos.poo2022.chinchon.principal.Mano;
 import proyectos.poo2022.chinchon.utilidades.MetodosUtiles;
@@ -17,7 +14,6 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.HashSet;
 
 public class PseudoConsola extends JFrame implements IVista {
 
@@ -33,9 +29,6 @@ public class PseudoConsola extends JFrame implements IVista {
 
     private Controlador controlador;
     private EstadoPrograma estadoActual;
-    private EstadoPrograma estadoAnterior;
-    private Flujo flujoActual;
-    private Flujo flujoAnterior;
 
     public PseudoConsola() {
         setFont(new Font("Monospaced", Font.PLAIN, 12));
@@ -66,7 +59,7 @@ public class PseudoConsola extends JFrame implements IVista {
         this.butt_enter = new JButton("Enter");
         butt_enter.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                manejadorDeComandos();
+                enterPresionado();
                 limpiarBarraComandos();
             }
         });
@@ -81,11 +74,65 @@ public class PseudoConsola extends JFrame implements IVista {
         display_mano_y_pila.setLineWrap(true);
     }
 
+    @Override
+    public void setControlador(Controlador controlador) {
+        this.controlador = controlador;
+    }
+
+    @Override
     public void iniciar() {
         this.inicioGrafico();
-        this.setNombreJugador("Consola: "+Jugador.generarNombreAleatorio());
+        this.setNombreJugador("Consola: " + Jugador.generarNombreAleatorio());
         this.controlador.setListoParaJugar(true);
-        this.controlador.empezarAJugar();
+    }
+
+    @Override
+    public void bloquear() {
+        this.setEstadoActual(EstadoPrograma.ESPERANDO_TURNO);
+        this.mostrarMenu(false);
+    }
+
+    @Override
+    public void actualizarManoYPila() {
+        this.mostrarManoYPila();
+    }
+
+    @Override
+    public void tomarDeMazoOPila() {
+        this.setEstadoActual(EstadoPrograma.ELIGIENDO_MAZO_O_PILA);
+        this.mostrarMenu(false);
+    }
+
+    @Override
+    public void descartarOCerrar() {
+        this.setEstadoActual(EstadoPrograma.DESCARTAR_O_CERRAR);
+        this.mostrarMenu(false);
+    }
+
+    @Override
+    public void mostrarPuntos() {
+        this.println("El jugador [" + this.controlador.getJugadorActual().getNombre() + "] ha cerrado la ronda.");
+        this.println("Los puntos restantes son:");
+        for (int i = 1; i <= this.controlador.getCantidadJugadores(); i++) {
+            this.println("Jugador : [" + this.controlador.getJugador(i).getNombre() + "]");
+            this.println("Puntos: " + this.controlador.getJugador(i).getPuntos());
+        }
+    }
+
+    @Override
+    public void perder() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'perder'");
+    }
+
+    @Override
+    public void ganar() {
+        this.setEstadoActual(EstadoPrograma.GANO);
+        this.mostrarMenu(false);
+    }
+
+    private void setEstadoActual(EstadoPrograma nuevoEstado) {
+        this.estadoActual = nuevoEstado;
     }
 
     private void solicitarNombre() {
@@ -105,14 +152,15 @@ public class PseudoConsola extends JFrame implements IVista {
         });
     }
 
-    private void manejadorDeComandos() {
+    private void enterPresionado() {
+        // si presionan enter, manejamos el input del usuario
         this.clear();
         switch ((EstadoPrograma) this.estadoActual) {
             default:
                 break;
 
             case ESPERANDO_LISTO_PARA_JUGAR:
-                this.inputMenuPrincipal(inputConsola());
+                this.cambiarListoParaJugar(inputConsola());
                 break;
 
             case DESCARTAR_O_CERRAR:
@@ -132,22 +180,8 @@ public class PseudoConsola extends JFrame implements IVista {
                 println("Por favor, espere su turno.");
                 // Esto se vuelve a escribir por el clear que se hace de forma incondicional
                 break;
-
-            case FINALIZANDO_TURNO:
-                // this.eligiendoDescartarOCerrar(inputConsola());
-                break;
-
-            case CERRANDO_RONDA:
-                this.flujoActual.recibirInput(inputConsola());
-                break;
-
         }
 
-    }
-
-    private void empezarFlujoCerrarRonda() {
-        this.setEstadoActual(EstadoPrograma.CERRANDO_RONDA);
-        this.setFlujoActual(new FlujoCerrarRonda(this));
     }
 
     private void elegirDescarte(String cartaDescartar) {
@@ -155,34 +189,46 @@ public class PseudoConsola extends JFrame implements IVista {
             this.println("Posición inválida. Ingrese la posición de su carta a descartar.");
             return;
         }
+
         int nCartaDescartar = Integer.valueOf(cartaDescartar);
 
         if (nCartaDescartar == 0) {
-            this.eligirFinTurno();
-        } else if ((nCartaDescartar < 1)
-                || (nCartaDescartar > controlador.getJugador().getMano().getCantidadCartas())) {
-            this.println("Posición inválida. Ingrese la posición de su carta a descartar.");
-        } else {
-            controlador.descartar(nCartaDescartar);
+            // si quiere descartar la carta 0, se interpreta como que quiere cerrar
+            controlador.terminarRonda();
+            return;
         }
 
+        if (nCartaDescartar < 0 || nCartaDescartar > getCantidadCartas()) {
+            this.println("Posición inválida. Ingrese la posición de su carta a descartar.");
+            return;
+        }
+
+        controlador.descartar(nCartaDescartar);
     }
 
     private String inputConsola() {
         return this.edit_input.getText().trim();
     }
 
-    private void inputMenuPrincipal(String opcion) {
-        if (opcion.equals("2")) {
-            this.controlador.setListoParaJugar(false);
-            this.println("Usted no está listo para jugar. Para prepararse, ingrese 1.");
-        } else if (opcion.equals("1")) {
-            this.controlador.setListoParaJugar(true);
-            this.println("Usted está listo para jugar. Para cancelar, ingrese 2.");
-            this.controlador.empezarAJugar();
-        } else {
-            this.println("Opción inválida.");
-            this.mostrarMenuPrincipal();
+    private int getCantidadCartas() {
+        return controlador.getJugador().getMano().getCantidadCartas();
+    }
+
+    private void cambiarListoParaJugar(String opcion) {
+        this.clear();
+        switch ((String) opcion) {
+            case "1":
+                this.println("Usted está listo para jugar. Para cancelar, ingrese 2.");
+                this.controlador.setListoParaJugar(true);
+                break;
+            case "2":
+                this.println("Usted no está listo para jugar. Para prepararse, ingrese 1.");
+                this.controlador.setListoParaJugar(false);
+                break;
+
+            default:
+                this.mostrarMenu(true);
+                break;
         }
     }
 
@@ -206,33 +252,10 @@ public class PseudoConsola extends JFrame implements IVista {
         this.print(this.cartaAString(carta));
     }
 
-    public void mostrarMenuPrincipal() {
-        this.setEstadoActual(EstadoPrograma.ESPERANDO_LISTO_PARA_JUGAR);
-        this.println("Opciones:");
-        this.println("1. Prepararse para jugar.");
-        this.println("2. Salir del juego.");
-    }
-
-    public void setControlador(Controlador controlador) {
-        this.controlador = controlador;
-    }
-
-    public void actualizarManoYPila() {
-        this.mostrarManoYPila();
-    }
-
     private void mostrarManoYPila() {
         this.display_mano_y_pila
                 .setText("Pila: \n" + this.cartaAString(this.controlador.getTopePila()) + "\n" + "Su mano:");
         this.verMiMano();
-    }
-
-    private void mostrarMano(Mano manoAMostrar) {
-        for (int i = 1; i <= manoAMostrar.getCantidadCartas(); i++) {
-            print("Posición: " + String.valueOf(i) + ". Carta: ");
-            this.mostrarCarta(manoAMostrar.getCarta(i));
-            println();
-        }
     }
 
     private void verMiMano() {
@@ -268,7 +291,6 @@ public class PseudoConsola extends JFrame implements IVista {
             this.controlador.setJugador(nombre);
             this.println("Su nombre: [" + nombre + "] fue establecido con éxito.");
             this.setTitle("Chinchón. Jugador: " + nombre);
-            this.mostrarMenuPrincipal();
         }
     }
 
@@ -280,97 +302,75 @@ public class PseudoConsola extends JFrame implements IVista {
         }
     }
 
-    public void clear() {
+    private void clear() {
         this.memo_display.setText("");
     }
 
-
-
-    public void limpiarBarraComandos() {
+    private void limpiarBarraComandos() {
         this.edit_input.setText("");
     }
 
-    public void bloquear() {
+    private Mano getMano() {
+        return this.controlador.getJugador().getMano();
+    }
+
+    private boolean puedeCerrarRonda() {
+        return this.getMano().esCerrable();
+    }
+
+    private void mostrarMenu(boolean mostrarError) {
         this.clear();
-        println("Está jugando el jugador [" + this.controlador.getJugadorActual().getNombre() + "].");
-        println("Por favor, espere su turno.");
-        this.setEstadoActual(EstadoPrograma.ESPERANDO_TURNO);
+        if (mostrarError)
+            println("Hubo un problema. Sus opciones son:");
+
+        switch (this.estadoActual) {
+            case ESPERANDO_LISTO_PARA_JUGAR:
+                this.println("Opciones:");
+                this.println("1. Prepararse para jugar.");
+                this.println("2. Salir del juego.");
+                break;
+
+            case ESPERANDO_TURNO:
+                this.println("Está jugando el jugador [" + this.controlador.getJugadorActual().getNombre() + "].");
+                this.println("Por favor, espere su turno.");
+                break;
+
+            case ELIGIENDO_MAZO_O_PILA:
+                this.println("1. Tomar carta del mazo.");
+                this.println("2. Tomar carta de la pila de descarte.");
+                break;
+
+            case DESCARTAR_O_CERRAR:
+                this.println("Ingrese la posición de la carta que desea descartar.");
+                if (puedeCerrarRonda())
+                    this.println("También puede ingresar 0 si desea cerrar la ronda.");
+                break;
+
+            case REGISTRANDO_JUGADOR:
+                this.println("Ingrese su nombre de jugador:");
+                break;
+
+            case GANO:
+                this.println("¡GANASTE!");
+                this.setEstadoActual(EstadoPrograma.GANO);
+                break;
+
+            default:
+                this.println("Usted está en estado de: " + this.estadoActual);
+                break;
+        }
     }
 
     private void eligiendoMazoOPila(String opcion) {
         if (opcion.equals("1")) {
             this.controlador.tomarTopeMazo();
-            this.eligirFinTurno();
         } else if (opcion.equals("2")) {
             this.controlador.tomarTopePilaDescarte();
-            this.eligirFinTurno();
         } else {
-            this.clear();
-            this.println("Opción inválida. Sus opciones son:");
-            this.println("1. Tomar carta del mazo.");
-            this.println("2. Tomar carta de la pila de descarte.");
+            this.mostrarMenu(true);
+
         }
         this.mostrarManoYPila();
     }
 
-    private void eligirFinTurno() {
-        this.println("Para finalizar su turno, puede: ");
-        this.println("1. Elegir una carta a descartar.");
-        this.println("2. Intentar armar sus jugadas y finalizar la mano.");
-        this.setEstadoActual(EstadoPrograma.FINALIZANDO_TURNO);
-    }
-
-    public void setEstadoActual(EstadoPrograma nuevoEstado) {
-        this.estadoAnterior = this.estadoActual;
-        this.estadoActual = nuevoEstado;
-    }
-
-    public void volverAEstadoAnterior() {
-        this.estadoActual = this.estadoAnterior;
-    }
-
-    public void setFlujoActual(Flujo nuevoFlujo) {
-        this.flujoAnterior = this.flujoActual;
-        this.flujoActual = nuevoFlujo;
-    }
-
-    public Controlador getControlador() {
-        return this.controlador;
-    }
-
-    public void terminarRonda() {
-        this.controlador.terminarRonda();
-    }
-
-    public void mostrarPuntos() {
-        this.println("El jugador [" + this.controlador.getJugadorActual().getNombre() + "] ha cerrado la ronda.");
-        this.println("Los puntos restantes son:");
-        for (int i = 1; i <= this.controlador.getCantidadJugadores(); i++) {
-            this.println("Jugador : [" + this.controlador.getJugador(i).getNombre() + "]");
-            this.println("Puntos: " + this.controlador.getJugador(i).getPuntos());
-        }
-
-    }
-
-    public void tomarDeMazoOPila() {
-        clear();
-        println("¡Es su turno de jugar!");
-        println("1. Para tomar una carta del mazo.");
-        println("2. Para tomar una carta de la pila de descarte.");
-        this.setEstadoActual(EstadoPrograma.ELIGIENDO_MAZO_O_PILA);
-    }
-
-    @Override
-    public void descartarOCerrar() {
-        // TODO Auto-generated method stub
-        System.out.println("implementar descartarOCerrar");
-        // throw new UnsupportedOperationException("Unimplemented method 'descartarOCerrar'");
-    }
-
-
-    @Override
-    public void perder() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'perder'");
-    }
 }

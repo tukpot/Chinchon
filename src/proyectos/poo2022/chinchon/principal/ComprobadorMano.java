@@ -57,15 +57,6 @@ public class ComprobadorMano {
         return resultadoCierreRecord;
     }
 
-    private static Carta encontrarCartaSobrante(List<Carta> mano, List<Carta> usadas) {
-        for (Carta carta : mano) {
-            if (!usadas.contains(carta)) {
-                return carta;
-            }
-        }
-        return null;
-    }
-
     private static List<List<Carta>> encontrarTrio(List<Carta> cartas) {
         Map<Integer, List<Carta>> porNumero = new HashMap<>();
         for (Carta carta : cartas) {

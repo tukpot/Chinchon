@@ -1,9 +1,6 @@
 package proyectos.poo2022.chinchon.principal;
 
 import java.util.Random;
-import java.util.ResourceBundle.Control;
-
-import proyectos.poo2022.chinchon.enumerados.Evento;
 import proyectos.poo2022.chinchon.interactuar.Controlador;
 import proyectos.poo2022.chinchon.interactuar.Observable;
 import proyectos.poo2022.chinchon.interactuar.Observador;
@@ -28,11 +25,11 @@ public class Jugador implements Observable {
 		this.mano.añadirCarta(mazoIn.tomarCartaTope());
 	}
 
-	public void descartarCarta(int cartaATirar, PilaDescarte pilaDescarte) { // añadir forma de recibir carta
+	public void descartarCarta(int cartaATirar, PilaCartas pilaDescarte) { // añadir forma de recibir carta
 		this.mano.transferirCarta(cartaATirar, pilaDescarte);
 	}
 
-	public void tomarCartaPilaDescarte(PilaDescarte pilaDescarteIn) {
+	public void tomarCartaPilaDescarte(PilaCartas pilaDescarteIn) {
 		Carta cartaRecienTomada = pilaDescarteIn.tomarCartaTope();
 		this.mano.añadirCarta(cartaRecienTomada);
 	}

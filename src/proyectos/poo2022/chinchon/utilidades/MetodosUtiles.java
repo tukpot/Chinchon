@@ -2,28 +2,25 @@ package proyectos.poo2022.chinchon.utilidades;
 
 public abstract class MetodosUtiles {
 
-    public static boolean esInt(String text) {
-	try {
-	Integer.valueOf(text);    
+	public static boolean esInt(String text) {
+		try {
+			Integer.valueOf(text);
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
 	}
-	catch (Exception e) {
-	    return false;
+
+	public static int[] arrayStringAInt(String[] arrayIn) {
+		try {
+			int[] arraySalida = new int[arrayIn.length];
+			for (int i = 0; i < arrayIn.length; i++) {
+				arraySalida[i] = Integer.valueOf(arrayIn[i]);
+			}
+			return arraySalida;
+		} catch (Exception e) {
+			return null;
+		}
 	}
-	return true;
-    }
-    
-    public static int[] arrayStringAInt(String[] arrayIn) {
-	try {
-	    int[] arraySalida = new int[arrayIn.length];
-	    for (int i=0; i<arrayIn.length;i++) {
-		arraySalida[i] = Integer.valueOf(arrayIn[i]);
-	    }
-	    return arraySalida;
-	}
-	catch (Exception e) {
-	    return null;
-	}
-    }
-    
 
 }
