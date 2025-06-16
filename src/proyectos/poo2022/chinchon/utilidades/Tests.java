@@ -5,8 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import proyectos.poo2022.chinchon.enumerados.Palo;
-import proyectos.poo2022.chinchon.principal.Carta;
-import proyectos.poo2022.chinchon.principal.ComprobadorMano;
+import proyectos.poo2022.chinchon.modelo.Carta;
 
 public class Tests {
 

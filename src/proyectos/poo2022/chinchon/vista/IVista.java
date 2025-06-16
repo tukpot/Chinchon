@@ -1,4 +1,6 @@
-package proyectos.poo2022.chinchon.interactuar;
+package proyectos.poo2022.chinchon.vista;
+
+import proyectos.poo2022.chinchon.interactuar.Controlador;
 
 public interface IVista {
 

@@ -1,13 +1,13 @@
-package proyectos.poo2022.chinchon.clientes.clienteGrafico2d;
+package proyectos.poo2022.chinchon.vista.clienteGrafico2d;
 
 import proyectos.poo2022.chinchon.enumerados.EstadoPrograma;
 import proyectos.poo2022.chinchon.enumerados.Evento;
 import proyectos.poo2022.chinchon.enumerados.Palo;
 import proyectos.poo2022.chinchon.interactuar.Controlador;
-import proyectos.poo2022.chinchon.interactuar.IVista;
-import proyectos.poo2022.chinchon.principal.Carta;
-import proyectos.poo2022.chinchon.principal.Jugador;
-import proyectos.poo2022.chinchon.principal.Mano;
+import proyectos.poo2022.chinchon.modelo.Carta;
+import proyectos.poo2022.chinchon.modelo.Jugador;
+import proyectos.poo2022.chinchon.modelo.Mano;
+import proyectos.poo2022.chinchon.vista.IVista;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -130,6 +130,12 @@ public class ClienteGrafico2d extends JFrame implements IVista {
         }
 
         setLocationRelativeTo(null);
+    }
+
+    public ClienteGrafico2d(Controlador controlador) {
+        this();
+        this.controlador = controlador;
+        this.controlador.setVista(this);
     }
 
     public void iniciar() {
@@ -301,5 +307,4 @@ public class ClienteGrafico2d extends JFrame implements IVista {
         this.printDebug("¡PERDISTE!");
         this.setEstadoActual(EstadoPrograma.PERDIO);
     }
-
 }

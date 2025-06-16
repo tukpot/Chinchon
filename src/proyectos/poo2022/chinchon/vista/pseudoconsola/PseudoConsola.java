@@ -1,13 +1,13 @@
-package proyectos.poo2022.chinchon.clientes.pseudoconsola;
+package proyectos.poo2022.chinchon.vista.pseudoconsola;
 
 import proyectos.poo2022.chinchon.enumerados.EstadoPrograma;
 import proyectos.poo2022.chinchon.enumerados.Palo;
 import proyectos.poo2022.chinchon.interactuar.Controlador;
-import proyectos.poo2022.chinchon.interactuar.IVista;
-import proyectos.poo2022.chinchon.principal.Carta;
-import proyectos.poo2022.chinchon.principal.Jugador;
-import proyectos.poo2022.chinchon.principal.Mano;
+import proyectos.poo2022.chinchon.modelo.Carta;
+import proyectos.poo2022.chinchon.modelo.Jugador;
+import proyectos.poo2022.chinchon.modelo.Mano;
 import proyectos.poo2022.chinchon.utilidades.MetodosUtiles;
+import proyectos.poo2022.chinchon.vista.IVista;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -121,8 +121,8 @@ public class PseudoConsola extends JFrame implements IVista {
 
     @Override
     public void perder() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'perder'");
+        setEstadoActual(EstadoPrograma.PERDIO);
+        this.mostrarMenu(false);
     }
 
     @Override
@@ -157,6 +157,7 @@ public class PseudoConsola extends JFrame implements IVista {
         this.clear();
         switch ((EstadoPrograma) this.estadoActual) {
             default:
+                mostrarMenu(false);
                 break;
 
             case ESPERANDO_LISTO_PARA_JUGAR:
@@ -352,7 +353,10 @@ public class PseudoConsola extends JFrame implements IVista {
 
             case GANO:
                 this.println("¡GANASTE!");
-                this.setEstadoActual(EstadoPrograma.GANO);
+                break;
+
+            case PERDIO:
+                this.println("¡PERDISTE!");
                 break;
 
             default:

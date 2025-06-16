@@ -1,8 +1,11 @@
-package proyectos.poo2022.chinchon.principal;
+package proyectos.poo2022.chinchon.utilidades;
 
 import java.util.*;
 
 import proyectos.poo2022.chinchon.enumerados.Palo;
+import proyectos.poo2022.chinchon.modelo.Carta;
+import proyectos.poo2022.chinchon.modelo.Mano;
+import proyectos.poo2022.chinchon.modelo.ResultadoCierre;
 
 public class ComprobadorMano {
 

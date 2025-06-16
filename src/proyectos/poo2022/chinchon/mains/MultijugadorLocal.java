@@ -1,17 +1,16 @@
 package proyectos.poo2022.chinchon.mains;
 
-import proyectos.poo2022.chinchon.clientes.clienteGrafico2d.ClienteGrafico2d;
-import proyectos.poo2022.chinchon.clientes.pseudoconsola.PseudoConsola;
+import java.rmi.RemoteException;
+
 import proyectos.poo2022.chinchon.interactuar.Controlador;
-import proyectos.poo2022.chinchon.interactuar.IVista;
-import proyectos.poo2022.chinchon.principal.ComprobadorMano;
-import proyectos.poo2022.chinchon.principal.Juego;
-import proyectos.poo2022.chinchon.utilidades.Tests;
-import ar.edu.unlu.rmimvc.servidor.Servidor;
+import proyectos.poo2022.chinchon.modelo.Juego;
+import proyectos.poo2022.chinchon.vista.IVista;
+import proyectos.poo2022.chinchon.vista.clienteGrafico2d.ClienteGrafico2d;
+import proyectos.poo2022.chinchon.vista.pseudoconsola.PseudoConsola;
 
 public class MultijugadorLocal {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws RemoteException {
 		// Tests.runAllTests();
 		Juego modelo = new Juego();
 

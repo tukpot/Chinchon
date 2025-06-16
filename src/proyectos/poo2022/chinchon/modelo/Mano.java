@@ -1,6 +1,8 @@
-package proyectos.poo2022.chinchon.principal;
+package proyectos.poo2022.chinchon.modelo;
 
 import java.util.List;
+
+import proyectos.poo2022.chinchon.utilidades.ComprobadorMano;
 
 public class Mano extends ConjuntoCartas {
 

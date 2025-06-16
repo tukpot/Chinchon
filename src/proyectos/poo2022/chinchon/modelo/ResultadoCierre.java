@@ -1,4 +1,4 @@
-package proyectos.poo2022.chinchon.principal;
+package proyectos.poo2022.chinchon.modelo;
 
 public class ResultadoCierre {
     public final boolean esCerrable;

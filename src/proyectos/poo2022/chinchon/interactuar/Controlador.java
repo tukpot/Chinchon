@@ -1,21 +1,52 @@
 package proyectos.poo2022.chinchon.interactuar;
+
+import java.rmi.RemoteException;
+
+import ar.edu.unlu.rmimvc.cliente.IControladorRemoto;
+import ar.edu.unlu.rmimvc.observer.IObservableRemoto;
 import proyectos.poo2022.chinchon.enumerados.*;
-import proyectos.poo2022.chinchon.principal.Carta;
-import proyectos.poo2022.chinchon.principal.Juego;
-import proyectos.poo2022.chinchon.principal.Jugador;
+import proyectos.poo2022.chinchon.modelo.Carta;
+import proyectos.poo2022.chinchon.modelo.Juego;
+import proyectos.poo2022.chinchon.modelo.Jugador;
+import proyectos.poo2022.chinchon.vista.IVista;
 
-
-public class Controlador implements Observador {
+public class Controlador implements Observador, IControladorRemoto {
 
 	private IVista vista;
 	private Juego modelo;
 	private Jugador jugador;
+	private int idJugador;
 
-	public Controlador(Juego modelo, IVista vista) {
+	public Controlador(){}
+
+	public Controlador(Juego modelo, IVista vista) throws RemoteException {
 		this.modelo = modelo;
 		this.vista = vista;
 		this.vista.setControlador(this);
 		this.modelo.agregarObservador(this);
+	}
+
+	public <T extends IObservableRemoto> Controlador(T modelo) {
+		try {
+			this.setModeloRemoto(modelo);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void actualizar(IObservableRemoto arg0, Object arg1) throws RemoteException {
+		this.actualizar(arg1, null);
+	}
+
+	@Override
+	public <T extends IObservableRemoto> void setModeloRemoto(T arg0) throws RemoteException {
+		// this.modelo = (IJuego) arg0;
+	}
+
+	public void setVista(IVista vista){
+		this.vista = vista;
 	}
 
 	public void actualizar(Object evento, Observable observado) {
@@ -97,7 +128,7 @@ public class Controlador implements Observador {
 	}
 
 	public boolean validarNombre(String nombre) {
-		return this.modelo.validarNombre(nombre);
+		return Jugador.validarNombre(nombre);
 	}
 
 	public boolean getListoParaJugar() {
@@ -115,10 +146,6 @@ public class Controlador implements Observador {
 		} else {
 			this.vista.bloquear();
 		}
-	}
-
-	public void terminarTurno() {
-		this.modelo.siguienteTurno();
 	}
 
 	public void terminarRonda() {

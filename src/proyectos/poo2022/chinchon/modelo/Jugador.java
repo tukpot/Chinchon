@@ -1,13 +1,19 @@
-package proyectos.poo2022.chinchon.principal;
+package proyectos.poo2022.chinchon.modelo;
 
+import java.io.Serializable;
 import java.util.Random;
 import proyectos.poo2022.chinchon.interactuar.Controlador;
 import proyectos.poo2022.chinchon.interactuar.Observable;
 import proyectos.poo2022.chinchon.interactuar.Observador;
 
-public class Jugador implements Observable {
-	Controlador controlador;
-	private Observador observador;
+public class Jugador implements Observable, Serializable {
+	transient private static int lastGeneratedId = 0;
+
+	transient Controlador controlador;
+	transient private Observador observador;
+	private int id;
+
+
 	private Mano mano = new Mano();
 	private int puntos = 0;
 	private String nombre;
@@ -15,6 +21,7 @@ public class Jugador implements Observable {
 
 	public Jugador(String nombre) {
 		this.nombre = nombre;
+		this.id = Jugador.lastGeneratedId++;
 	}
 
 	public void notificar(Object evento) {
@@ -41,6 +48,10 @@ public class Jugador implements Observable {
 	public String getNombre() {
 		return this.nombre;
 	}
+	
+	public int getId(){
+		return this.id;
+	}
 
 	public void setListoParaJugar(boolean listo) {
 		this.listoParaJugar = listo;
@@ -65,6 +76,11 @@ public class Jugador implements Observable {
 
 	public void añadirPuntosMano() {
 		this.puntos = this.puntos + this.mano.calcularPuntajeRestante();
+	}
+
+	public static boolean validarNombre(String nombre){
+		if (nombre==null || nombre.equals("")) return false;
+		return true;
 	}
 
 	public static String generarNombreAleatorio() {

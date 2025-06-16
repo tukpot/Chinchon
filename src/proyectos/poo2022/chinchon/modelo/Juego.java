@@ -1,19 +1,76 @@
-package proyectos.poo2022.chinchon.principal;
+package proyectos.poo2022.chinchon.modelo;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
+import ar.edu.unlu.rmimvc.observer.IObservadorRemoto;
+import ar.edu.unlu.rmimvc.observer.ObservableRemoto;
 import proyectos.poo2022.chinchon.enumerados.Evento;
 import proyectos.poo2022.chinchon.interactuar.*;
 
-public class Juego implements Observable {
-	private ArrayList<Observador> observadores = new ArrayList<Observador>();
-	private ArrayList<Jugador> jugadores = new ArrayList<Jugador>();
+//
+public class Juego extends ObservableRemoto implements IJuego {
+	// private ArrayList<Observador> observadores = new ArrayList<Observador>();
+	// private ArrayList<Jugador> jugadores = new ArrayList<Jugador>();
+	private HashMap<Integer, Jugador> jugadores = new HashMap<>();
 	private Ronda ronda;
 	private int jugadorMano = -1;
 
+	public Jugador conectarJugador(String nombre) {
+		Jugador jugador = new Jugador(nombre);
+		agregarJugador(jugador);
+		System.out.println("Se conectó el jugador: " + jugador.getNombre());
+		return jugador;
+	}
+
+	@Override
+	public void desconectarJugador(int usuarioId) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'desconectarJugador'");
+	}
+
+	@Override
+	public Jugador[] getJugadores() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'getJugadores'");
+	}
+
+	@Override
+	public void setListoParaJugar(int jugador, boolean estaListo) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'setListoParaJugar'");
+	}
+
+	@Override
+	public void tomarTopeMazo(int jugadorQueToma) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'tomarTopeMazo'");
+	}
+
+	@Override
+	public void tomarTopePilaDescarte(int jugadorQueToma) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'tomarTopePilaDescarte'");
+	}
+
+	@Override
+	public void descartar(int cartaElegida, int jugadorQueDescarta) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'descartar'");
+	}
+
+	@Override
+	public Mano getMano(int numJugador) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'getMano'");
+	}
+
 	public void nuevaRonda() {
 		this.cambiarJugadorMano();
-		this.ronda = new Ronda(this.jugadorMano, this.jugadores);
+		ArrayList<Jugador> listaJugadores = new ArrayList<>(jugadores.values());
+		this.ronda = new Ronda(this.jugadorMano, listaJugadores);
 		this.notificar(Evento.NUEVO_TURNO);
 	}
 
@@ -31,10 +88,6 @@ public class Juego implements Observable {
 		for (int i = 0; i < this.observadores.size(); i++) {
 			this.observadores.get(i).actualizar(evento, this);
 		}
-	}
-
-	public void agregarObservador(Observador observador) {
-		this.observadores.add(observador);
 	}
 
 	public void siguienteTurno() {
@@ -75,18 +128,7 @@ public class Juego implements Observable {
 	}
 
 	public void agregarJugador(Jugador jugador) {
-		this.jugadores.add(jugador);
-	}
-
-	public boolean validarNombre(String nombre) {
-		boolean resultado = true;
-		for (Jugador jugador : jugadores) {
-			if (jugador.getNombre().equals(nombre)) {
-				resultado = false;
-				break;
-			}
-		}
-		return resultado;
+		this.jugadores.put(jugador.getId(), jugador);
 	}
 
 	public void empezarAJugar() {
@@ -146,5 +188,24 @@ public class Juego implements Observable {
 
 	public Jugador getJugador(int nJugador) {
 		return this.jugadores.get(nJugador - 1);
+	}
+
+
+	@Override
+	public void notificarObservadores() throws RemoteException {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'notificarObservadores'");
+	}
+
+	@Override
+	public void notificarObservadores(Object arg0) throws RemoteException {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'notificarObservadores'");
+	}
+
+	@Override
+	public void removerObservador(IObservadorRemoto arg0) throws RemoteException {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'removerObservador'");
 	}
 }
