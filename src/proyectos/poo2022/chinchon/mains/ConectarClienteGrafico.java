@@ -24,7 +24,7 @@ public class ConectarClienteGrafico {
                 null,
                 ips.toArray(),
                 null);
-        String port = "9999";
+        String port = "9999"; //esto debería ser dinámico por si quiero probar en la misma pc como si fuera lan
         String ipServidor = (String) JOptionPane.showInputDialog(
                 null,
                 "Seleccione la IP en la corre el servidor", "IP del servidor",
