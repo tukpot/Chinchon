@@ -1,25 +1,25 @@
 package proyectos.poo2022.chinchon.vista;
 
+import java.rmi.RemoteException;
+
 import proyectos.poo2022.chinchon.interactuar.Controlador;
 
 public interface IVista {
 
-	void setControlador(Controlador controlador);
-
 	void iniciar();
 
-	void bloquear();
+	void bloquear() throws RemoteException;
 
-	void actualizarManoYPila();
+	void actualizarManoYPila() throws RemoteException;
 
 	void tomarDeMazoOPila();
 
 	void descartarOCerrar();
 
-	void mostrarPuntos();
+	void mostrarPuntos() throws RemoteException;
 
 	void perder();
 
-    void ganar();
+    void ganar() throws RemoteException;
 
 }

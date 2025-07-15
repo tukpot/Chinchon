@@ -32,4 +32,10 @@ public interface IJuego extends IObservableRemoto {
     void descartar(int cartaElegida, int jugadorQueDescarta) throws RemoteException;
 
     Mano getMano(int numJugador) throws RemoteException;
+
+    void terminarRonda(Jugador jugador) throws RemoteException;
+
+    void empezarAJugar() throws RemoteException;
+
+    void testearConectividad() throws RemoteException;
 }

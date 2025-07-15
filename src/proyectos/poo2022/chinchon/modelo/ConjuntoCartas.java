@@ -1,12 +1,13 @@
 package proyectos.poo2022.chinchon.modelo;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 
-public class ConjuntoCartas {
+public class ConjuntoCartas implements Serializable {
 	private ArrayList<Carta> cartas = new ArrayList<Carta>();
 
 	public ConjuntoCartas() {

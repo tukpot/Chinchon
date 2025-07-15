@@ -1,35 +1,30 @@
-package proyectos.poo2022.chinchon.vista.clienteGrafico2d;
+package proyectos.poo2022.chinchon.vista.vista2D;
 
 import proyectos.poo2022.chinchon.enumerados.EstadoPrograma;
-import proyectos.poo2022.chinchon.enumerados.Evento;
-import proyectos.poo2022.chinchon.enumerados.Palo;
 import proyectos.poo2022.chinchon.interactuar.Controlador;
 import proyectos.poo2022.chinchon.modelo.Carta;
-import proyectos.poo2022.chinchon.modelo.Jugador;
 import proyectos.poo2022.chinchon.modelo.Mano;
-import proyectos.poo2022.chinchon.vista.IVista;
+import proyectos.poo2022.chinchon.vista.common.VistaBase;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.rmi.RemoteException;
 
-public class ClienteGrafico2d extends JFrame implements IVista {
+public class Vista2D extends VistaBase {
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
     private JButton[] botonesCartasMano = new JButton[8];
     private JButton botonPila;
     private JButton botonMazo;
-    private JButton botonCerrarRonda;
+    private JButton botonAccion;
     private JTextArea textAreaDebug;
     private JLabel labelJugadorActual;
-    private JTextField inputNombre;
 
-    private EstadoPrograma estadoActual;
-    private Controlador controlador;
+    private EstadoPrograma estadoActual = EstadoPrograma.ESPERANDO_LISTO_PARA_JUGAR;
 
-    public ClienteGrafico2d() {
+    public Vista2D(Controlador controlador) {
+        super(controlador);
         setFont(new Font("Monospaced", Font.PLAIN, 12));
         setTitle("Chinchón :-)");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -63,7 +58,14 @@ public class ClienteGrafico2d extends JFrame implements IVista {
         botonMazo.setFont(new Font("Monospaced", Font.BOLD, 14));
         botonMazo.setContentAreaFilled(false);
         botonMazo.setFocusPainted(false);
-        botonMazo.addActionListener(e -> mazoPresionado());
+        botonMazo.addActionListener(e -> {
+            try {
+                mazoPresionado();
+            } catch (RemoteException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
+        });
         panelMazoYPila.add(botonMazo);
 
         botonPila = new JButton("Pila");
@@ -71,7 +73,14 @@ public class ClienteGrafico2d extends JFrame implements IVista {
         botonPila.setFont(new Font("Monospaced", Font.BOLD, 14));
         botonPila.setContentAreaFilled(false);
         botonPila.setFocusPainted(false);
-        botonPila.addActionListener(e -> pilaPresionada());
+        botonPila.addActionListener(e -> {
+            try {
+                pilaPresionada();
+            } catch (RemoteException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
+        });
         panelMazoYPila.add(botonPila);
 
         // panel de acciones en el centro
@@ -82,17 +91,19 @@ public class ClienteGrafico2d extends JFrame implements IVista {
 
         labelJugadorActual = new JLabel("ESTÁ JUGANDO:");
         labelJugadorActual.setOpaque(true);
-
-        inputNombre = new JTextField("ingrese su nombre aquí");
-        inputNombre.setOpaque(true);
-        this.inputNombre = inputNombre;
-        panelAcciones.add(inputNombre);
         panelAcciones.add(labelJugadorActual);
 
-        botonCerrarRonda = new JButton("Cerrar Ronda");
-        botonCerrarRonda.setPreferredSize(new Dimension(120, 60));
-        botonCerrarRonda.addActionListener(e -> botonAccionPresionado());
-        panelAcciones.add(botonCerrarRonda);
+        botonAccion = new JButton("Listo para jugar");
+        botonAccion.setPreferredSize(new Dimension(120, 60));
+        botonAccion.addActionListener(e -> {
+            try {
+                botonAccionPresionado();
+            } catch (RemoteException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
+        });
+        panelAcciones.add(botonAccion);
 
         textAreaDebug = new JTextArea();
         textAreaDebug.setFont(new Font("Monospaced", Font.PLAIN, 12));
@@ -124,7 +135,14 @@ public class ClienteGrafico2d extends JFrame implements IVista {
             boton.setContentAreaFilled(false);
             boton.setFocusPainted(false);
             final int numeroBoton = i;
-            boton.addActionListener(e -> cartaManoPresionada(numeroBoton));
+            boton.addActionListener(e -> {
+                try {
+                    cartaManoPresionada(numeroBoton);
+                } catch (RemoteException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                }
+            });
             botonesCartasMano[i] = boton;
             panelBotones.add(boton);
         }
@@ -132,27 +150,8 @@ public class ClienteGrafico2d extends JFrame implements IVista {
         setLocationRelativeTo(null);
     }
 
-    public ClienteGrafico2d(Controlador controlador) {
-        this();
-        this.controlador = controlador;
-        this.controlador.setVista(this);
-    }
-
-    public void iniciar() {
-        EventQueue.invokeLater(() -> {
-            setVisible(true);
-
-            setNombreJugador("2D: " + Jugador.generarNombreAleatorio());
-            controlador.setListoParaJugar(true);
-        });
-    }
-
-    public void setControlador(Controlador controlador) {
-        this.controlador = controlador;
-    }
-
     @Override
-    public void actualizarManoYPila() {
+    public void actualizarManoYPila() throws RemoteException {
         Mano mano = this.getMano();
         for (int i = 0; i <= 7; i++) {
             JButton boton = this.getBotonCarta(i);
@@ -160,41 +159,43 @@ public class ClienteGrafico2d extends JFrame implements IVista {
             this.dibujarCarta(boton, cartaMano);
         }
         printDebug("estado programa: " + this.estadoActual);
-        this.botonCerrarRonda
+        this.botonAccion
                 .setEnabled(this.getMano().esCerrable() && this.estadoActual == EstadoPrograma.DESCARTAR_O_CERRAR);
-        this.dibujarCarta(this.botonPila, this.controlador.getTopePila());
+        this.dibujarCarta(this.botonPila, this.getTopePila());
         this.dibujarCarta(this.botonMazo, null);
     }
 
-    public void bloquear() {
-        this.labelJugadorActual.setText("Es turno del jugador: " + this.controlador.getJugadorActual().getNombre());
-        printDebug("Es turno del jugador: " + this.controlador.getJugadorActual().getNombre());
+    public void bloquear() throws RemoteException {
+        this.labelJugadorActual.setText("Es turno del jugador: " + this.getJugadorActual().getNombre());
+        printDebug("Es turno del jugador: " + this.getJugadorActual().getNombre());
     }
 
     @Override
-    public void mostrarPuntos() {
+    public void mostrarPuntos() throws RemoteException {
         this.clearDebug();
-        this.printDebug("El jugador [" + this.controlador.getJugadorActual().getNombre() + "] ha cerrado la ronda.");
-        for (int i = 1; i <= this.controlador.getCantidadJugadores(); i++) {
-            this.printDebug("Jugador : [" + this.controlador.getJugador(i).getNombre() + "]");
-            this.printDebug("Puntos: " + this.controlador.getJugador(i).getPuntos());
+        this.printDebug("El jugador [" + this.getJugadorActual().getNombre() + "] ha cerrado la ronda.");
+        for (int i = 1; i <= this.getCantidadJugadores(); i++) {
+            this.printDebug("Jugador : [" + this.getJugador(i).getNombre() + "]");
+            this.printDebug("Puntos: " + this.getJugador(i).getPuntos());
         }
     }
 
-    private void cartaManoPresionada(int numeroCarta) {
+    private void cartaManoPresionada(int numeroCarta) throws RemoteException {
         if (this.estadoActual == EstadoPrograma.DESCARTAR_O_CERRAR) {
-            controlador.descartar(numeroCarta + 1);
+            this.descartar(numeroCarta + 1);
         }
     }
 
-    private void botonAccionPresionado() {
+    private void botonAccionPresionado() throws RemoteException {
         // dependiendo de el estado actual del programa, hace cosas distintas
+        this.testConectado();
         switch ((EstadoPrograma) this.estadoActual) {
             default:
-                break;
 
-            case REGISTRANDO_JUGADOR:
-                this.setNombreJugador("2D: " + Jugador.generarNombreAleatorio());
+                break;
+            
+            case ESPERANDO_LISTO_PARA_JUGAR:
+                this.setListoParaJugar(true);
                 break;
 
             case DESCARTAR_O_CERRAR:
@@ -250,33 +251,20 @@ public class ClienteGrafico2d extends JFrame implements IVista {
         }
     }
 
-    private void setNombreJugador(String nombre) {
-        this.controlador.setJugador(nombre);
-        this.setTitle(nombre);
-    }
-
     private void setEstadoActual(EstadoPrograma nuevoEstado) {
         this.estadoActual = nuevoEstado;
     }
 
-    private void mazoPresionado() {
+    private void mazoPresionado() throws RemoteException {
         if (this.estadoActual != EstadoPrograma.ELIGIENDO_MAZO_O_PILA)
             return;
-        this.controlador.tomarTopeMazo();
+        this.tomarTopeMazo();
     }
 
-    private void pilaPresionada() {
+    private void pilaPresionada() throws RemoteException {
         if (this.estadoActual != EstadoPrograma.ELIGIENDO_MAZO_O_PILA)
             return;
-        this.controlador.tomarTopePilaDescarte();
-    }
-
-    private void terminarRonda() {
-        controlador.terminarRonda();
-    }
-
-    private Mano getMano() {
-        return this.controlador.getJugador().getMano();
+        this.tomarTopePilaDescarte();
     }
 
     @Override
@@ -294,7 +282,7 @@ public class ClienteGrafico2d extends JFrame implements IVista {
     }
 
     @Override
-    public void ganar() {
+    public void ganar() throws RemoteException {
         this.clearDebug();
         this.printDebug("¡GANASTE!");
         this.printDebug("Estos son los puntajes finales:");
@@ -306,5 +294,13 @@ public class ClienteGrafico2d extends JFrame implements IVista {
     public void perder() {
         this.printDebug("¡PERDISTE!");
         this.setEstadoActual(EstadoPrograma.PERDIO);
+    }
+
+    public void logicaInicioAdicional() {
+
+    }
+
+    public void sesionIniciada() throws RemoteException {
+        setVisible(true);
     }
 }

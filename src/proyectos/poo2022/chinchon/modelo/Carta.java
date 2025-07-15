@@ -1,10 +1,11 @@
 package proyectos.poo2022.chinchon.modelo;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 import proyectos.poo2022.chinchon.enumerados.Palo;
 
-public class Carta {
+public class Carta implements Serializable {
 	private final Palo palo;
 	private final int numero;
 

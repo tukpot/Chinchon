@@ -11,7 +11,8 @@ import ar.edu.unlu.rmimvc.cliente.Cliente;
 import proyectos.poo2022.chinchon.interactuar.Controlador;
 import proyectos.poo2022.chinchon.modelo.Juego;
 import proyectos.poo2022.chinchon.vista.IVista;
-import proyectos.poo2022.chinchon.vista.clienteGrafico2d.ClienteGrafico2d;
+import proyectos.poo2022.chinchon.vista.common.VistaBase;
+import proyectos.poo2022.chinchon.vista.vista2D.Vista2D;
 
 public class ConectarClienteGrafico {
 
@@ -24,7 +25,13 @@ public class ConectarClienteGrafico {
                 null,
                 ips.toArray(),
                 null);
-        String port = "9999"; //esto debería ser dinámico por si quiero probar en la misma pc como si fuera lan
+        String port = (String) JOptionPane.showInputDialog(
+                null,
+                "Seleccione el puerto en el que escuchar� peticiones el cliente", "Puerto del cliente",
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                null,
+                9999);
         String ipServidor = (String) JOptionPane.showInputDialog(
                 null,
                 "Seleccione la IP en la corre el servidor", "IP del servidor",
@@ -32,9 +39,15 @@ public class ConectarClienteGrafico {
                 null,
                 null,
                 null);
-        String portServidor = "8888";
+        String portServidor = (String) JOptionPane.showInputDialog(
+                null,
+                "Seleccione el puerto en el que corre el servidor", "Puerto del servidor",
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                null,
+                8888);
         Controlador controlador = new Controlador();
-        IVista vista = new ClienteGrafico2d(controlador);
+        IVista vista = new Vista2D(controlador);
         Cliente c = new Cliente(ip, Integer.parseInt(port), ipServidor, Integer.parseInt(portServidor));
         vista.iniciar();
         try {

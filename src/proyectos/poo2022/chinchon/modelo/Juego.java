@@ -3,16 +3,15 @@ package proyectos.poo2022.chinchon.modelo;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
-import ar.edu.unlu.rmimvc.observer.IObservadorRemoto;
 import ar.edu.unlu.rmimvc.observer.ObservableRemoto;
 import proyectos.poo2022.chinchon.enumerados.Evento;
 import proyectos.poo2022.chinchon.interactuar.*;
 
 //
 public class Juego extends ObservableRemoto implements IJuego {
-	// private ArrayList<Observador> observadores = new ArrayList<Observador>();
+	// private ArrayList<IObservadorRemoto> observadores = new
+	// ArrayList<IObservadorRemoto>();
 	// private ArrayList<Jugador> jugadores = new ArrayList<Jugador>();
 	private HashMap<Integer, Jugador> jugadores = new HashMap<>();
 	private Ronda ronda;
@@ -67,11 +66,11 @@ public class Juego extends ObservableRemoto implements IJuego {
 		throw new UnsupportedOperationException("Unimplemented method 'getMano'");
 	}
 
-	public void nuevaRonda() {
+	public void nuevaRonda() throws RemoteException {
 		this.cambiarJugadorMano();
 		ArrayList<Jugador> listaJugadores = new ArrayList<>(jugadores.values());
 		this.ronda = new Ronda(this.jugadorMano, listaJugadores);
-		this.notificar(Evento.NUEVO_TURNO);
+		this.notificarObservadores(Evento.NUEVO_TURNO);
 	}
 
 	private void cambiarJugadorMano() {
@@ -84,15 +83,9 @@ public class Juego extends ObservableRemoto implements IJuego {
 		}
 	}
 
-	public void notificar(Object evento) {
-		for (int i = 0; i < this.observadores.size(); i++) {
-			this.observadores.get(i).actualizar(evento, this);
-		}
-	}
-
-	public void siguienteTurno() {
+	public void siguienteTurno() throws RemoteException {
 		this.ronda.siguienteTurno();
-		this.notificar(Evento.NUEVO_TURNO);
+		this.notificarObservadores(Evento.NUEVO_TURNO);
 	}
 
 	public Jugador getJugadorActual() {
@@ -103,23 +96,23 @@ public class Juego extends ObservableRemoto implements IJuego {
 		return this.ronda.getTopePila();
 	}
 
-	public void tomarTopePilaDescarte(Jugador jugadorQueToma) {
+	public void tomarTopePilaDescarte(Jugador jugadorQueToma) throws RemoteException {
 		if (jugadorQueToma != this.getJugadorActual())
 			return;
 
 		this.ronda.tomarTopePilaDescarte(jugadorQueToma);
-		this.notificar(Evento.DESCARTAR_O_CERRAR);
+		this.notificarObservadores(Evento.DESCARTAR_O_CERRAR);
 	}
 
-	public void tomarTopeMazo(Jugador jugadorQueToma) {
+	public void tomarTopeMazo(Jugador jugadorQueToma) throws RemoteException {
 		if (jugadorQueToma != this.getJugadorActual())
 			return;
 
 		this.ronda.tomarTopeMazo(jugadorQueToma);
-		this.notificar(Evento.DESCARTAR_O_CERRAR);
+		this.notificarObservadores(Evento.DESCARTAR_O_CERRAR);
 	}
 
-	public void descartar(int cartaElegida, Jugador jugadorQueDescarta) {
+	public void descartar(int cartaElegida, Jugador jugadorQueDescarta) throws RemoteException {
 		if (jugadorQueDescarta != this.getJugadorActual())
 			return;
 
@@ -131,7 +124,7 @@ public class Juego extends ObservableRemoto implements IJuego {
 		this.jugadores.put(jugador.getId(), jugador);
 	}
 
-	public void empezarAJugar() {
+	public void empezarAJugar() throws RemoteException {
 		if (this.jugadores.size() < 2) {
 			return;
 		}
@@ -152,7 +145,7 @@ public class Juego extends ObservableRemoto implements IJuego {
 		ganador.notificar(Evento.GANASTE);
 	}
 
-	public void terminarRonda(Jugador jugadorQueCierra) {
+	public void terminarRonda(Jugador jugadorQueCierra) throws RemoteException {
 		// if not jugador.getMano().esCerrable() notificar error
 		if (jugadorQueCierra != this.getJugadorActual())
 			return;
@@ -165,8 +158,8 @@ public class Juego extends ObservableRemoto implements IJuego {
 		}
 
 		this.ronda.sumarPuntos();
-		this.notificar(Evento.RONDA_TERMINADA);
-		for (Jugador jugador : this.jugadores) {
+		this.notificarObservadores(Evento.RONDA_TERMINADA);
+		for (Jugador jugador : this.jugadores.values()) {
 			if (jugador.getPuntos() >= 100) {
 				eliminarPerdedor(jugador);
 			}
@@ -190,22 +183,7 @@ public class Juego extends ObservableRemoto implements IJuego {
 		return this.jugadores.get(nJugador - 1);
 	}
 
-
-	@Override
-	public void notificarObservadores() throws RemoteException {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'notificarObservadores'");
-	}
-
-	@Override
-	public void notificarObservadores(Object arg0) throws RemoteException {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'notificarObservadores'");
-	}
-
-	@Override
-	public void removerObservador(IObservadorRemoto arg0) throws RemoteException {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'removerObservador'");
+	public void testearConectividad() throws RemoteException {
+		System.out.println("mostrando mensaje en el servidor");
 	}
 }
