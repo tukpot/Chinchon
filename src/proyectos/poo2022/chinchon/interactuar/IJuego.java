@@ -19,7 +19,7 @@ public interface IJuego extends IObservableRemoto {
 
     Jugador getJugadorActual() throws RemoteException;
 
-    Jugador getJugador(int numeroJugador) throws RemoteException;
+    Jugador getJugador(int id) throws RemoteException;
 
     Jugador[] getJugadores() throws RemoteException;
 

@@ -179,8 +179,8 @@ public class Juego extends ObservableRemoto implements IJuego {
 		return this.jugadores.size();
 	}
 
-	public Jugador getJugador(int nJugador) {
-		return this.jugadores.get(nJugador - 1);
+	public Jugador getJugador(int idJugador) {
+		return this.jugadores.get(idJugador);
 	}
 
 	public void testearConectividad() throws RemoteException {

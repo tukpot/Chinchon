@@ -45,39 +45,39 @@ public class Controlador implements IControladorRemoto {
 					break;
 
 				case DESCARTAR_O_CERRAR:
-					// if (this.getJugador() == this.getJugadorActual())
-					// vista.descartarOCerrar();
-					// else {
-					// vista.bloquear();
-					// }
+					if (this.getJugador() == this.getJugadorActual())
+						vista.descartarOCerrar();
+					else {
+						vista.bloquear();
+					}
 					break;
 
 				case NUEVO_TURNO:
-					// if (this.getJugador() == this.getJugadorActual()) {
-					// this.nuevoTurno();
-					// } else {
-					// vista.bloquear();
-					// }
+					if (this.getJugador().getId() == this.getJugadorActual().getId()) {
+						this.nuevoTurno();
+					} else {
+						vista.bloquear();
+					}
 					break;
 
 				case GANASTE:
-					// vista.ganar();
+					vista.ganar();
 					return;
 
 				case PERDISTE:
-					// vista.perder();
-					// vista.bloquear();
+					vista.perder();
+					vista.bloquear();
 					return;
 
 				case RONDA_TERMINADA:
-					// this.vista.mostrarPuntos();
+					this.vista.mostrarPuntos();
 					// retorna para evitar actualización de mano y pila que actualiza la consola
 
 					// debug y otras
 					return;
 			}
 		}
-		// vista.actualizarManoYPila();
+		vista.actualizarManoYPila();
 	}
 
 	@Override
@@ -117,40 +117,30 @@ public class Controlador implements IControladorRemoto {
 		this.modelo.descartar(cartaElegida, this.getJugador().getId());
 	}
 
-	// public void setJugador(String nombre) {
-	// this.jugador = new Jugador(nombre);
-	// this.jugador.setControlador(this);
-	// this.modelo.agregarJugador(this.jugador);
-	// }
-
 	public Jugador getJugador() {
 		return this.jugador;
 	}
 
-	public Jugador getJugador(int i) throws RemoteException {
-		return this.modelo.getJugador(i);
+	public Jugador getJugador(int id) throws RemoteException {
+		return this.modelo.getJugador(id);
 	}
-
-	// public boolean validarNombre(String nombre) {
-	// return Jugador.validarNombre(nombre);
-	// }
 
 	// public boolean getListoParaJugar() {
 	// return this.jugador.getListoParaJugar();
 	// }
 
 	public void setListoParaJugar(boolean listo) throws RemoteException {
-		this.jugador.setListoParaJugar(listo);
+		this.modelo.setListoParaJugar(idJugador, listo);
 		this.modelo.empezarAJugar();
 	}
 
-	// private void nuevoTurno() {
-	// if (this.jugador == this.modelo.getJugadorActual()) {
-	// this.vista.tomarDeMazoOPila();
-	// } else {
-	// this.vista.bloquear();
-	// }
-	// }
+	private void nuevoTurno() throws RemoteException {
+		if (this.jugador.getId() == this.modelo.getJugadorActual().getId()) {
+			this.vista.tomarDeMazoOPila();
+		} else {
+			this.vista.bloquear();
+		}
+	}
 
 	public void terminarRonda() throws RemoteException {
 		this.modelo.terminarRonda(this.getJugador());
