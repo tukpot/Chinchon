@@ -12,16 +12,16 @@ public interface IVista {
 
 	void actualizarManoYPila() throws RemoteException;
 
-	void tomarDeMazoOPila();
+	void tomarDeMazoOPila() throws RemoteException;
 
-	void descartarOCerrar();
+	void descartarOCerrar() throws RemoteException;
 
 	void mostrarPuntos() throws RemoteException;
 
-	void perder();
+	void perder() throws RemoteException;
 
     void ganar() throws RemoteException;
 
-	void esperarNuevaRonda();
+	void esperarNuevaRonda() throws RemoteException;
 
 }

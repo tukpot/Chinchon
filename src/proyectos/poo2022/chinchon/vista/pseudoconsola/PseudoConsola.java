@@ -8,14 +8,16 @@ import proyectos.poo2022.chinchon.modelo.Jugador;
 import proyectos.poo2022.chinchon.modelo.Mano;
 import proyectos.poo2022.chinchon.utilidades.MetodosUtiles;
 import proyectos.poo2022.chinchon.vista.IVista;
+import proyectos.poo2022.chinchon.vista.common.VistaBase;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.rmi.RemoteException;
 
-public class PseudoConsola extends JFrame implements IVista {
+public class PseudoConsola extends VistaBase {
 
     /**
      * 
@@ -26,11 +28,10 @@ public class PseudoConsola extends JFrame implements IVista {
     private JTextArea memo_display;
     private JButton butt_enter;
     private JTextArea display_mano_y_pila;
+    private EstadoPrograma estadoActual = EstadoPrograma.ESPERANDO_LISTO_PARA_JUGAR;
 
-    private Controlador controlador;
-    private EstadoPrograma estadoActual;
-
-    public PseudoConsola() {
+    public PseudoConsola(Controlador controlador) {
+        super(controlador);
         setFont(new Font("Monospaced", Font.PLAIN, 12));
         setTitle("Chinchón :-)");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -59,7 +60,12 @@ public class PseudoConsola extends JFrame implements IVista {
         this.butt_enter = new JButton("Enter");
         butt_enter.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                enterPresionado();
+                try {
+                    enterPresionado();
+                } catch (RemoteException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                }
                 limpiarBarraComandos();
             }
         });
@@ -75,58 +81,43 @@ public class PseudoConsola extends JFrame implements IVista {
     }
 
     @Override
-    public void setControlador(Controlador controlador) {
-        this.controlador = controlador;
-    }
-
-    @Override
-    public void iniciar() {
-        this.inicioGrafico();
-        this.setNombreJugador("Consola: " + Jugador.generarNombreAleatorio());
-        this.controlador.setListoParaJugar(true);
-    }
-
-    @Override
-    public void bloquear() {
+    public void bloquear() throws RemoteException {
         this.setEstadoActual(EstadoPrograma.ESPERANDO_TURNO);
         this.mostrarMenu(false);
     }
 
     @Override
-    public void actualizarManoYPila() {
+    public void actualizarManoYPila() throws RemoteException {
         this.mostrarManoYPila();
     }
 
     @Override
-    public void tomarDeMazoOPila() {
+    public void tomarDeMazoOPila() throws RemoteException {
         this.setEstadoActual(EstadoPrograma.ELIGIENDO_MAZO_O_PILA);
         this.mostrarMenu(false);
     }
 
     @Override
-    public void descartarOCerrar() {
+    public void descartarOCerrar() throws RemoteException {
         this.setEstadoActual(EstadoPrograma.DESCARTAR_O_CERRAR);
         this.mostrarMenu(false);
     }
 
-    @Override
-    public void mostrarPuntos() {
-        this.println("El jugador [" + this.controlador.getJugadorActual().getNombre() + "] ha cerrado la ronda.");
-        this.println("Los puntos restantes son:");
-        for (int i = 1; i <= this.controlador.getCantidadJugadores(); i++) {
-            this.println("Jugador : [" + this.controlador.getJugador(i).getNombre() + "]");
-            this.println("Puntos: " + this.controlador.getJugador(i).getPuntos());
+    public void mostrarPuntos() throws RemoteException {
+        this.println("El jugador [" + this.getJugadorActual().getNombre() + "] ha cerrado la ronda.");
+        Jugador[] jugadores = this.getJugadores();
+        for (Jugador jugador : jugadores) {
+            this.println("Jugador : [" + jugador.getNombre() + "]");
+            this.println("Puntos: " + jugador.getPuntos());
         }
     }
 
-    @Override
-    public void perder() {
+    public void perder() throws RemoteException {
         setEstadoActual(EstadoPrograma.PERDIO);
         this.mostrarMenu(false);
     }
 
-    @Override
-    public void ganar() {
+    public void ganar() throws RemoteException {
         this.setEstadoActual(EstadoPrograma.GANO);
         this.mostrarMenu(false);
     }
@@ -135,24 +126,7 @@ public class PseudoConsola extends JFrame implements IVista {
         this.estadoActual = nuevoEstado;
     }
 
-    private void solicitarNombre() {
-        this.println("Escriba su nombre de jugador.");
-        this.estadoActual = EstadoPrograma.REGISTRANDO_JUGADOR;
-    }
-
-    public void inicioGrafico() { // esto crea la ventana
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    private void enterPresionado() {
+    private void enterPresionado() throws RemoteException {
         // si presionan enter, manejamos el input del usuario
         this.clear();
         switch ((EstadoPrograma) this.estadoActual) {
@@ -169,7 +143,6 @@ public class PseudoConsola extends JFrame implements IVista {
                 break;
 
             case REGISTRANDO_JUGADOR:
-                this.setNombreJugador(inputConsola());
                 break;
 
             case ELIGIENDO_MAZO_O_PILA:
@@ -177,7 +150,7 @@ public class PseudoConsola extends JFrame implements IVista {
                 break;
 
             case ESPERANDO_TURNO:
-                println("Está jugando el jugador [" + this.controlador.getJugadorActual().getNombre() + "].");
+                println("Está jugando el jugador [" + this.getJugadorActual().getNombre() + "].");
                 println("Por favor, espere su turno.");
                 // Esto se vuelve a escribir por el clear que se hace de forma incondicional
                 break;
@@ -185,7 +158,7 @@ public class PseudoConsola extends JFrame implements IVista {
 
     }
 
-    private void elegirDescarte(String cartaDescartar) {
+    private void elegirDescarte(String cartaDescartar) throws RemoteException {
         if (!(MetodosUtiles.esInt(cartaDescartar))) {
             this.println("Posición inválida. Ingrese la posición de su carta a descartar.");
             return;
@@ -195,7 +168,7 @@ public class PseudoConsola extends JFrame implements IVista {
 
         if (nCartaDescartar == 0) {
             // si quiere descartar la carta 0, se interpreta como que quiere cerrar
-            controlador.terminarRonda();
+            this.terminarRonda();
             return;
         }
 
@@ -204,27 +177,27 @@ public class PseudoConsola extends JFrame implements IVista {
             return;
         }
 
-        controlador.descartar(nCartaDescartar);
+        this.descartar(nCartaDescartar);
     }
 
     private String inputConsola() {
         return this.edit_input.getText().trim();
     }
 
-    private int getCantidadCartas() {
-        return controlador.getJugador().getMano().getCantidadCartas();
+    private int getCantidadCartas() throws RemoteException {
+        return this.getJugador().getMano().getCantidadCartas();
     }
 
-    private void cambiarListoParaJugar(String opcion) {
+    private void cambiarListoParaJugar(String opcion) throws RemoteException {
         this.clear();
         switch ((String) opcion) {
             case "1":
-                this.println("Usted está listo para jugar. Para cancelar, ingrese 2.");
-                this.controlador.setListoParaJugar(true);
+                this.println("Usted está listo para jugar.");
+                this.setListoParaJugar(true);
                 break;
             case "2":
-                this.println("Usted no está listo para jugar. Para prepararse, ingrese 1.");
-                this.controlador.setListoParaJugar(false);
+                this.println("Usted no está listo para jugar.");
+                this.setListoParaJugar(false);
                 break;
 
             default:
@@ -253,15 +226,15 @@ public class PseudoConsola extends JFrame implements IVista {
         this.print(this.cartaAString(carta));
     }
 
-    private void mostrarManoYPila() {
+    private void mostrarManoYPila() throws RemoteException {
         this.display_mano_y_pila
-                .setText("Pila: \n" + this.cartaAString(this.controlador.getTopePila()) + "\n" + "Su mano:");
+                .setText("Pila: \n" + this.cartaAString(this.getTopePila()) + "\n" + "Su mano:");
         this.verMiMano();
     }
 
-    private void verMiMano() {
+    private void verMiMano() throws RemoteException {
         this.display_mano_y_pila.setText(
-                this.display_mano_y_pila.getText() + "\n" + manoAString(this.controlador.getJugador().getMano()));
+                this.display_mano_y_pila.getText() + "\n" + manoAString(this.getJugador().getMano()));
     }
 
     private String manoAString(Mano mano) {
@@ -285,24 +258,6 @@ public class PseudoConsola extends JFrame implements IVista {
         return textoSalida;
     }
 
-    public void setNombreJugador(String nombre) {
-        if (!(esNombreValido(nombre))) {
-            println("Nombre inválido, pruebe con uno diferente.");
-        } else {
-            this.controlador.setJugador(nombre);
-            this.println("Su nombre: [" + nombre + "] fue establecido con éxito.");
-            this.setTitle("Chinchón. Jugador: " + nombre);
-        }
-    }
-
-    private boolean esNombreValido(String nombre) {
-        if ((nombre == null) || (nombre.equals(""))) {
-            return false;
-        } else {
-            return controlador.validarNombre(nombre);
-        }
-    }
-
     private void clear() {
         this.memo_display.setText("");
     }
@@ -311,15 +266,11 @@ public class PseudoConsola extends JFrame implements IVista {
         this.edit_input.setText("");
     }
 
-    private Mano getMano() {
-        return this.controlador.getJugador().getMano();
-    }
-
-    private boolean puedeCerrarRonda() {
+    private boolean puedeCerrarRonda() throws RemoteException {
         return this.getMano().esCerrable();
     }
 
-    private void mostrarMenu(boolean mostrarError) {
+    private void mostrarMenu(boolean mostrarError) throws RemoteException {
         this.clear();
         if (mostrarError)
             println("Hubo un problema. Sus opciones son:");
@@ -328,11 +279,10 @@ public class PseudoConsola extends JFrame implements IVista {
             case ESPERANDO_LISTO_PARA_JUGAR:
                 this.println("Opciones:");
                 this.println("1. Prepararse para jugar.");
-                this.println("2. Salir del juego.");
                 break;
 
             case ESPERANDO_TURNO:
-                this.println("Está jugando el jugador [" + this.controlador.getJugadorActual().getNombre() + "].");
+                this.println("Está jugando el jugador [" + this.getJugadorActual().getNombre() + "].");
                 this.println("Por favor, espere su turno.");
                 break;
 
@@ -365,16 +315,35 @@ public class PseudoConsola extends JFrame implements IVista {
         }
     }
 
-    private void eligiendoMazoOPila(String opcion) {
+    private void eligiendoMazoOPila(String opcion) throws RemoteException {
         if (opcion.equals("1")) {
-            this.controlador.tomarTopeMazo();
+            this.tomarTopeMazo();
         } else if (opcion.equals("2")) {
-            this.controlador.tomarTopePilaDescarte();
+            this.tomarTopePilaDescarte();
         } else {
             this.mostrarMenu(true);
 
         }
         this.mostrarManoYPila();
+    }
+
+    @Override
+    public void esperarNuevaRonda() throws RemoteException {
+        this.setEstadoActual(EstadoPrograma.ESPERANDO_LISTO_PARA_JUGAR);
+        // this.botonAccion.setText("Listo para jugar");
+        this.mostrarMenu(false);
+    }
+
+    @Override
+    public void logicaInicioAdicional() {
+        // no hacer nada xD
+    }
+
+    @Override
+    public void sesionIniciada() throws RemoteException {
+        setTitle("Chinchon 2D: " + this.getJugador().getNombre() + ": 0 puntos");
+        setVisible(true);
+        this.mostrarMenu(false);
     }
 
 }

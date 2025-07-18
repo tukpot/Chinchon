@@ -176,7 +176,6 @@ public class Vista2D extends VistaBase {
         printDebug("Es turno del jugador: " + this.getJugadorActual().getNombre());
     }
 
-    @Override
     public void mostrarPuntos() throws RemoteException {
         this.printDebug("El jugador [" + this.getJugadorActual().getNombre() + "] ha cerrado la ronda.");
         Jugador[] jugadores = this.getJugadores();
@@ -303,7 +302,7 @@ public class Vista2D extends VistaBase {
     }
 
     public void logicaInicioAdicional() {
-
+        // no hacer nada xD
     }
 
     public void sesionIniciada() throws RemoteException {
