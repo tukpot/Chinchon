@@ -78,6 +78,7 @@ public class Juego extends ObservableRemoto implements IJuego {
 	}
 
 	private void cambiarJugadorMano() {
+		//mejorar manejo de jugador mano (usar random)
 		if (this.jugadorMano == -1) {
 			this.jugadorMano = 0;
 		} else if (this.jugadorMano < this.jugadores.size() - 1) {
@@ -153,16 +154,11 @@ public class Juego extends ObservableRemoto implements IJuego {
 			if (jugador.getPuntos() >= 100) {
 				eliminarPerdedor(jugador);
 			}
+			jugador.setListoParaJugar(false);
 		}
 		if (this.getCantidadJugadores() < 2) {
 			declararGanador(this.getJugadores()[0]);
 		}
-
-		this.nuevaRonda();
-		// echar a jugadores con más de 100 puntos
-		// si queda un único jugador, declararlo ganador absoluto god dios el mejor de
-		// todos.
-
 	}
 
 	public int getCantidadJugadores() {

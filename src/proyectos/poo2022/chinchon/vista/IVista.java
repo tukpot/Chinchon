@@ -22,4 +22,6 @@ public interface IVista {
 
     void ganar() throws RemoteException;
 
+	void esperarNuevaRonda();
+
 }

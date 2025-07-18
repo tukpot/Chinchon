@@ -3,6 +3,7 @@ package proyectos.poo2022.chinchon.vista.vista2D;
 import proyectos.poo2022.chinchon.enumerados.EstadoPrograma;
 import proyectos.poo2022.chinchon.interactuar.Controlador;
 import proyectos.poo2022.chinchon.modelo.Carta;
+import proyectos.poo2022.chinchon.modelo.Jugador;
 import proyectos.poo2022.chinchon.modelo.Mano;
 import proyectos.poo2022.chinchon.vista.common.VistaBase;
 
@@ -52,7 +53,7 @@ public class Vista2D extends VistaBase {
         panelMazoYPila.setOpaque(false);
         contentPane.add(panelMazoYPila, BorderLayout.NORTH);
 
-        botonMazo = new JButton("Mazo jijiji");
+        botonMazo = new JButton("Mazo");
         botonMazo.setPreferredSize(new Dimension(200, 250));
         botonMazo.setFont(new Font("Monospaced", Font.BOLD, 14));
         botonMazo.setContentAreaFilled(false);
@@ -161,13 +162,16 @@ public class Vista2D extends VistaBase {
         if (this.estadoActual != EstadoPrograma.ESPERANDO_LISTO_PARA_JUGAR) {
             this.botonAccion.setText("Cerrar Ronda");
         }
-        this.botonAccion
-                .setEnabled(this.getMano().esCerrable() && this.estadoActual == EstadoPrograma.DESCARTAR_O_CERRAR);
+        boolean habilitarBoton = (this.getMano().esCerrable() && this.estadoActual == EstadoPrograma.DESCARTAR_O_CERRAR)
+                || this.estadoActual == EstadoPrograma.ESPERANDO_LISTO_PARA_JUGAR;
+        this.botonAccion.setEnabled(habilitarBoton);
         this.dibujarCarta(this.botonPila, this.getTopePila());
         this.dibujarCarta(this.botonMazo, null);
+        setTitle("Chinchon 2D: " + this.getJugador().getNombre() + ": " + this.getJugador().getPuntos() + " puntos");
     }
 
     public void bloquear() throws RemoteException {
+        this.setEstadoActual(EstadoPrograma.ESPERANDO_TURNO);
         this.labelJugadorActual.setText("Es turno del jugador: " + this.getJugadorActual().getNombre());
         printDebug("Es turno del jugador: " + this.getJugadorActual().getNombre());
     }
@@ -175,9 +179,10 @@ public class Vista2D extends VistaBase {
     @Override
     public void mostrarPuntos() throws RemoteException {
         this.printDebug("El jugador [" + this.getJugadorActual().getNombre() + "] ha cerrado la ronda.");
-        for (int i = 1; i <= this.getCantidadJugadores(); i++) {
-            this.printDebug("Jugador : [" + this.getJugador(i).getNombre() + "]");
-            this.printDebug("Puntos: " + this.getJugador(i).getPuntos());
+        Jugador[] jugadores = this.getJugadores();
+        for (Jugador jugador : jugadores) {
+            this.printDebug("Jugador : [" + jugador.getNombre() + "]");
+            this.printDebug("Puntos: " + jugador.getPuntos());
         }
     }
 
@@ -278,7 +283,8 @@ public class Vista2D extends VistaBase {
     public void descartarOCerrar() {
         clearDebug();
         printDebug("Seleccione la carta que desea descartar o presione el botón para cerrar la ronda");
-        this.estadoActual = EstadoPrograma.DESCARTAR_O_CERRAR;
+
+        this.setEstadoActual(EstadoPrograma.DESCARTAR_O_CERRAR);
     }
 
     @Override
@@ -301,7 +307,13 @@ public class Vista2D extends VistaBase {
     }
 
     public void sesionIniciada() throws RemoteException {
-        setTitle("Chinchon 2D: " + this.getJugador().getNombre());
+        setTitle("Chinchon 2D: " + this.getJugador().getNombre() + ": 0 puntos");
         setVisible(true);
+    }
+
+    public void esperarNuevaRonda() {
+        this.setEstadoActual(EstadoPrograma.ESPERANDO_LISTO_PARA_JUGAR);
+        this.botonAccion.setText("Listo para jugar");
+        this.botonAccion.setEnabled(true);
     }
 }

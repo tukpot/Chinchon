@@ -12,7 +12,7 @@ public class Ronda {
 		this.jugadorActual = jugadorMano;
 		this.jugadores = jugadores;
 		this.resetManos();
-		// this.mazo.barajar(); Comentado para pruebas
+		this.mazo.barajar(); // Comentar para pruebas
 		this.mazo.repartir(this.jugadores, 7, false);
 		this.pilaDescarte.añadirCarta(this.mazo.tomarCartaTope());
 
@@ -29,6 +29,7 @@ public class Ronda {
 	}
 
 	public void siguienteTurno() {
+		//mejorar manejo de turnos
 		if (this.jugadorActual < this.jugadores.size() - 1) {
 			this.jugadorActual = this.jugadorActual + 1;
 		} else {

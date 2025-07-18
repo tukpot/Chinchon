@@ -75,10 +75,10 @@ public class Controlador implements IControladorRemoto {
 				break;
 
 			case RONDA_TERMINADA:
+				// this.vista.actualizarPuntaje();
 				this.vista.mostrarPuntos();
+				this.vista.esperarNuevaRonda();
 				// retorna para evitar actualización de mano y pila que actualiza la consola
-
-				// debug y otras
 				return;
 		}
 	}
@@ -150,6 +150,11 @@ public class Controlador implements IControladorRemoto {
 		this.modelo.descartar(cartaElegida, this.getJugador().getId());
 	}
 
+	public Jugador[] getJugadores() throws RemoteException {
+		return this.modelo.getJugadores();
+
+	}
+
 	public Jugador getJugador() throws RemoteException {
 		return this.modelo.getJugador(idJugador);
 	}
@@ -160,7 +165,6 @@ public class Controlador implements IControladorRemoto {
 
 	public void setListoParaJugar(boolean listo) throws RemoteException {
 		this.modelo.setListoParaJugar(this.getJugador().getId(), listo);
-		// this.modelo.empezarAJugar();
 	}
 
 	private void nuevoTurno() throws RemoteException {
