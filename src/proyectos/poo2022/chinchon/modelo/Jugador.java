@@ -6,7 +6,7 @@ import proyectos.poo2022.chinchon.interactuar.Controlador;
 import proyectos.poo2022.chinchon.interactuar.Observable;
 import proyectos.poo2022.chinchon.interactuar.Observador;
 
-public class Jugador implements Observable, Serializable {
+public class Jugador implements Serializable {
 	transient private static int lastGeneratedId = 0;
 
 	transient Controlador controlador;
@@ -24,9 +24,6 @@ public class Jugador implements Observable, Serializable {
 		this.id = Jugador.lastGeneratedId++;
 	}
 
-	public void notificar(Object evento) {
-		this.observador.actualizar(evento, this);
-	}
 
 	public void tomarCartaMazo(Mazo mazoIn) {
 		this.mano.añadirCarta(mazoIn.tomarCartaTope());
@@ -69,11 +66,6 @@ public class Jugador implements Observable, Serializable {
 		return puntos;
 	}
 
-	public void setControlador(Controlador controlador) {
-		this.controlador = controlador;
-		this.agregarObservador(controlador);
-	}
-
 	public void añadirPuntosMano() {
 		this.puntos = this.puntos + this.mano.calcularPuntajeRestante();
 	}
@@ -104,13 +96,5 @@ public class Jugador implements Observable, Serializable {
 		String adjetivoAleatorio = adjetivos[rand.nextInt(adjetivos.length)];
 
 		return razaAleatoria + " " + adjetivoAleatorio;
-	}
-
-	public void agregarObservador(Observador observador) {
-		if (this.observador == null) {
-			this.observador = observador;
-		} else {
-			throw new Error("Observador ya seteado para el jugador [" + this.getNombre() + "]");
-		}
 	}
 }

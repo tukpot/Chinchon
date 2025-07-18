@@ -9,7 +9,7 @@ import proyectos.poo2022.chinchon.modelo.Mano;
 
 public interface IJuego extends IObservableRemoto {
 
-    Jugador conectarJugador(String nombre) throws RemoteException;
+    int conectarJugador(String nombre) throws RemoteException;
 
     void desconectarJugador(int usuarioId) throws RemoteException;
 
@@ -33,7 +33,7 @@ public interface IJuego extends IObservableRemoto {
 
     Mano getMano(int numJugador) throws RemoteException;
 
-    void terminarRonda(Jugador jugador) throws RemoteException;
+    void terminarRonda(int jugador) throws RemoteException;
 
     void empezarAJugar() throws RemoteException;
 

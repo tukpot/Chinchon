@@ -26,7 +26,6 @@ public class Vista2D extends VistaBase {
     public Vista2D(Controlador controlador) {
         super(controlador);
         setFont(new Font("Monospaced", Font.PLAIN, 12));
-        setTitle("Chinchón :-)");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 800, 800);
 
@@ -159,6 +158,9 @@ public class Vista2D extends VistaBase {
             this.dibujarCarta(boton, cartaMano);
         }
         printDebug("estado programa: " + this.estadoActual);
+        if (this.estadoActual != EstadoPrograma.ESPERANDO_LISTO_PARA_JUGAR) {
+            this.botonAccion.setText("Cerrar Ronda");
+        }
         this.botonAccion
                 .setEnabled(this.getMano().esCerrable() && this.estadoActual == EstadoPrograma.DESCARTAR_O_CERRAR);
         this.dibujarCarta(this.botonPila, this.getTopePila());
@@ -172,7 +174,6 @@ public class Vista2D extends VistaBase {
 
     @Override
     public void mostrarPuntos() throws RemoteException {
-        this.clearDebug();
         this.printDebug("El jugador [" + this.getJugadorActual().getNombre() + "] ha cerrado la ronda.");
         for (int i = 1; i <= this.getCantidadJugadores(); i++) {
             this.printDebug("Jugador : [" + this.getJugador(i).getNombre() + "]");
@@ -188,12 +189,11 @@ public class Vista2D extends VistaBase {
 
     private void botonAccionPresionado() throws RemoteException {
         // dependiendo de el estado actual del programa, hace cosas distintas
-        this.testConectado();
         switch ((EstadoPrograma) this.estadoActual) {
             default:
 
                 break;
-            
+
             case ESPERANDO_LISTO_PARA_JUGAR:
                 this.setListoParaJugar(true);
                 break;
@@ -301,6 +301,7 @@ public class Vista2D extends VistaBase {
     }
 
     public void sesionIniciada() throws RemoteException {
+        setTitle("Chinchon 2D: " + this.getJugador().getNombre());
         setVisible(true);
     }
 }

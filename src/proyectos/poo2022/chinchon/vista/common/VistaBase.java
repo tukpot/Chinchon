@@ -32,6 +32,7 @@ public abstract class VistaBase extends JFrame implements IVista {
                 controlador.conectarJugador(vInicioSesion.getGetNombreUsuario());
                 try {
                     sesionIniciada();
+                    vInicioSesion.setVisible(false);
                 } catch (RemoteException e) {
                     System.out.println("fallo al testear la conectividad");
                 }
@@ -57,7 +58,7 @@ public abstract class VistaBase extends JFrame implements IVista {
         return this.controlador.getTopePila();
     }
 
-    public final Mano getMano() {
+    public final Mano getMano() throws RemoteException {
         return this.controlador.getJugador().getMano();
     }
 
@@ -85,11 +86,15 @@ public abstract class VistaBase extends JFrame implements IVista {
         return this.controlador.getJugador(id);
     }
 
+    public final Jugador getJugador() throws RemoteException {
+        return this.controlador.getJugador();
+    }
+
     public final int getCantidadJugadores() throws RemoteException {
         return this.controlador.getCantidadJugadores();
     }
 
-    public final void testConectado() throws RemoteException{
+    public final void testConectado() throws RemoteException {
         this.controlador.testConectado();
     }
 }
