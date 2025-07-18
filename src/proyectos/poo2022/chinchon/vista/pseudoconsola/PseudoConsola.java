@@ -129,6 +129,9 @@ public class PseudoConsola extends VistaBase {
     private void enterPresionado() throws RemoteException {
         // si presionan enter, manejamos el input del usuario
         this.clear();
+        if (inputConsola()=="top"){
+            this.print(this.getJugadoresTopString());
+        }
         switch ((EstadoPrograma) this.estadoActual) {
             default:
                 mostrarMenu(false);

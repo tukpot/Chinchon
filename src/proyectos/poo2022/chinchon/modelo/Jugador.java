@@ -2,15 +2,10 @@ package proyectos.poo2022.chinchon.modelo;
 
 import java.io.Serializable;
 import java.util.Random;
-import proyectos.poo2022.chinchon.interactuar.Controlador;
-import proyectos.poo2022.chinchon.interactuar.Observable;
-import proyectos.poo2022.chinchon.interactuar.Observador;
 
 public class Jugador implements Serializable {
 	transient private static int lastGeneratedId = 0;
 
-	transient Controlador controlador;
-	transient private Observador observador;
 	private int id;
 
 
@@ -81,7 +76,7 @@ public class Jugador implements Serializable {
 				"silencioso", "ruidoso", "salvaje", "errante", "temible", "noble",
 				"sombrío", "valiente", "enojado", "estoico", "sabio", "congelado", "llameante",
 				"hastiado", "meloso", "amoroso", "dormilón", "gordo", "bebé", "poderoso", "veloz", "brillante",
-				"divertido", "aburrido", "anarquista", "sagaz", "maníaco", "juguetón", "jocoso", "enérgico"
+				"divertido", "aburrido", "anarquista", "sagaz", "maníaco", "juguetón", "jocoso", "enérgico","perplejo","pedante"
 		};
 
 		String[] razasDeOso = {

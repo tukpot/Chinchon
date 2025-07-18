@@ -38,4 +38,6 @@ public interface IJuego extends IObservableRemoto {
     void empezarAJugar() throws RemoteException;
 
     void testearConectividad() throws RemoteException;
+
+    String getJugadoresTopString() throws RemoteException;
 }

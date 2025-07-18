@@ -3,6 +3,7 @@ package proyectos.poo2022.chinchon.modelo;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import ar.edu.unlu.rmimvc.observer.ObservableRemoto;
 import proyectos.poo2022.chinchon.enumerados.Evento;
@@ -11,7 +12,6 @@ import proyectos.poo2022.chinchon.interactuar.*;
 public class Juego extends ObservableRemoto implements IJuego {
 	private HashMap<Integer, Jugador> jugadores = new HashMap<>();
 	private Ronda ronda;
-	private int jugadorMano = -1;
 
 	public int conectarJugador(String nombre) {
 		Jugador jugador = new Jugador(nombre);
@@ -20,7 +20,6 @@ public class Juego extends ObservableRemoto implements IJuego {
 		return jugador.getId();
 	}
 
-	@Override
 	public void desconectarJugador(int usuarioId) {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException("Unimplemented method 'desconectarJugador'");
@@ -32,9 +31,6 @@ public class Juego extends ObservableRemoto implements IJuego {
 
 	public void setListoParaJugar(int jugador, boolean estaListo) throws RemoteException {
 		Jugador jugadorListo = this.getJugador(jugador);
-
-		System.out.println(
-				"id solicitada: " + jugador + " jugador obtenido:" + jugadorListo.getNombre() + jugadorListo.getId());
 		jugadorListo.setListoParaJugar(true);
 		this.empezarAJugar();
 	}
@@ -71,21 +67,10 @@ public class Juego extends ObservableRemoto implements IJuego {
 	}
 
 	public void nuevaRonda() throws RemoteException {
-		this.cambiarJugadorMano();
 		ArrayList<Jugador> listaJugadores = new ArrayList<>(jugadores.values());
-		this.ronda = new Ronda(this.jugadorMano, listaJugadores);
+		int numeroJugadorMano = (int) (Math.random() * (jugadores.size() - 1));
+		this.ronda = new Ronda(numeroJugadorMano, listaJugadores);
 		this.notificarObservadores(Evento.NUEVO_TURNO);
-	}
-
-	private void cambiarJugadorMano() {
-		//mejorar manejo de jugador mano (usar random)
-		if (this.jugadorMano == -1) {
-			this.jugadorMano = 0;
-		} else if (this.jugadorMano < this.jugadores.size() - 1) {
-			this.jugadorMano++;
-		} else {
-			this.jugadorMano = 0;
-		}
 	}
 
 	public void siguienteTurno() throws RemoteException {
@@ -171,5 +156,9 @@ public class Juego extends ObservableRemoto implements IJuego {
 
 	public void testearConectividad() throws RemoteException {
 		System.out.println("mostrando mensaje en el servidor");
+	}
+
+	public String getJugadoresTop() {
+		return TopJugadores.getInstancia().getJugadoresTopString();
 	}
 }

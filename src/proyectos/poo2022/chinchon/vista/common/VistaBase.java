@@ -101,4 +101,8 @@ public abstract class VistaBase extends JFrame implements IVista {
     public final void testConectado() throws RemoteException {
         this.controlador.testConectado();
     }
+
+    public final String getJugadoresTopString() throws RemoteException {
+        return this.controlador.getJugadoresTopString();
+    }
 }

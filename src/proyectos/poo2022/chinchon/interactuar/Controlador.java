@@ -19,7 +19,6 @@ public class Controlador implements IControladorRemoto {
 	public <T extends IObservableRemoto> Controlador(T modelo) {
 		try {
 			this.setModeloRemoto(modelo);
-			System.out.println(modelo);
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -188,4 +187,7 @@ public class Controlador implements IControladorRemoto {
 		this.modelo.testearConectividad();
 	}
 
+	public String getJugadoresTopString() throws RemoteException {
+		return this.modelo.getJugadoresTopString();
+	}
 }
