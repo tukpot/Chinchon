@@ -158,7 +158,8 @@ public class Juego extends ObservableRemoto implements IJuego {
 		System.out.println("mostrando mensaje en el servidor");
 	}
 
-	public String getJugadoresTop() {
+	public String getJugadoresTopString() throws RemoteException {
+		// TODO Auto-generated method stub
 		return TopJugadores.getInstancia().getJugadoresTopString();
 	}
 }
