@@ -29,7 +29,7 @@ public class Ronda {
 	}
 
 	public void siguienteTurno() {
-		//mejorar manejo de turnos
+		// mejorar manejo de turnos
 		if (this.jugadorActual < this.jugadores.size() - 1) {
 			this.jugadorActual = this.jugadorActual + 1;
 		} else {
