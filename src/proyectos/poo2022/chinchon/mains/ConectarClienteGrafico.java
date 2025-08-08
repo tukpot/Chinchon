@@ -44,11 +44,8 @@ public class ConectarClienteGrafico {
 
         String portServidor = "8888";
 
-        // Establecer propiedad para que RMI use la IP externa del cliente si es
-        // necesario
         System.setProperty("java.rmi.server.hostname", ipCliente);
 
-        // Iniciar cliente
         Controlador controlador = new Controlador();
         IVista vista = new Vista2D(controlador);
         Cliente c = new Cliente(ipCliente, Integer.parseInt(port), ipServidor, Integer.parseInt(portServidor));
@@ -61,7 +58,7 @@ public class ConectarClienteGrafico {
         }
     }
 
-    // Método para obtener automáticamente la IP local válida (IPv4)
+
     private static String getLocalIPAddress() {
         try {
             Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
