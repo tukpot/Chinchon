@@ -22,26 +22,6 @@ public class Carta implements Serializable {
 		return this.numero;
 	}
 
-	public boolean tieneMismoNumero(Carta carta) {
-		if (carta.getNumero() == this.getNumero()) {
-			return true;
-		}
-		if (carta.getPalo() == Palo.COMODIN) {
-			return true;
-		}
-		return false;
-	}
-
-	public boolean tieneMismoPalo(Carta carta) {
-		if ((carta.getPalo() == Palo.COMODIN) || (this.getPalo() == Palo.COMODIN)) {
-			return true;
-		}
-		if (carta.getPalo() == this.getPalo()) {
-			return true;
-		}
-		return false;
-	}
-
 	public String getImageName() {
 		if (this.getPalo() == Palo.COMODIN)
 			return "comodin.png";
