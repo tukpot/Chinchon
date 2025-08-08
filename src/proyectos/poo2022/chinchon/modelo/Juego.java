@@ -120,6 +120,7 @@ public class Juego extends ObservableRemoto implements IJuego {
 
 	public void terminarRonda(int idJugadorQueCierra) throws RemoteException {
 		Jugador jugadorQueCierra = this.getJugador(idJugadorQueCierra);
+		TopJugadores.getInstancia().agregarJugador(jugadorQueCierra);
 		if (!jugadorQueCierra.getMano().esCerrable())
 			return;
 
@@ -159,7 +160,6 @@ public class Juego extends ObservableRemoto implements IJuego {
 	}
 
 	public String getJugadoresTopString() throws RemoteException {
-		// TODO Auto-generated method stub
 		return TopJugadores.getInstancia().getJugadoresTopString();
 	}
 }
