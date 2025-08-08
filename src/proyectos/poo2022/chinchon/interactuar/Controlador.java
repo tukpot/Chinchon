@@ -123,7 +123,7 @@ public class Controlador implements IControladorRemoto {
 
 	public void conectarJugador(String nombre) {
 		try {
-			this.idJugador = this.modelo.conectarJugador(nombre); // cambiar por IJugador
+			this.idJugador = this.modelo.conectarJugador(nombre);
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
