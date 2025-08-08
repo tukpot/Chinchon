@@ -10,6 +10,7 @@ import proyectos.poo2022.chinchon.modelo.ResultadoCierre;
 public class ComprobadorMano {
 
     public static boolean esListaCerrable(List<Carta> mano) {
+		//esto es público solamente para poder testearlo
         if (mano.size() != 7)
             return false;
 
